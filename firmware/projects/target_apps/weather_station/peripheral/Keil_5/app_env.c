@@ -50,8 +50,9 @@ void app_env_init(){
     // none
 }
 
-void app_meas_temp(){
-	meas_temp();
+void app_set_temp_val(uint16_t* temp_val){
+	set_temp_val(temp_val);
+	printf("<APP_ENV>: Temperature value set to: %d\n", *temp_val);
 }
 
 void app_env_create_db(void)

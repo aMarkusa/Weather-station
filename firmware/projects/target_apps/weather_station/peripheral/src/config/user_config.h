@@ -171,6 +171,7 @@ static const struct advertise_configuration user_adv_conf = {
                                     ADV_TYPE_URI\
                                     "\x16\x2F\x2F\x77\x77\x77\x2E\x69\x61\x6E\x61\x2E\x6F\x72\x67")
 
+
 /// Advertising data length - maximum 28 bytes, 3 bytes are reserved to set
 #define USER_ADVERTISE_DATA_LEN               (sizeof(USER_ADVERTISE_DATA)-1)
 
@@ -196,7 +197,7 @@ static const struct advertise_configuration user_adv_conf = {
  ****************************************************************************************
  */
 /// Device name
-#define USER_DEVICE_NAME        "DLG-PROXR"
+#define USER_DEVICE_NAME        "TMP-SENS"
 
 /// Device name length
 #define USER_DEVICE_NAME_LEN    (sizeof(USER_DEVICE_NAME)-1)

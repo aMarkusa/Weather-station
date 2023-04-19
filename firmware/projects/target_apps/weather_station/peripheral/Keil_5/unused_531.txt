@@ -1,4 +1,4 @@
-;#<FEEDBACK># ARM Linker, 5060960: Last Updated: Wed Mar 29 18:58:27 2023
+;#<FEEDBACK># ARM Linker, 5060960: Last Updated: Wed Apr 19 21:01:12 2023
 ;VERSION 0.2
 ;FILE adc_531.o
 adc_correct_sample <= USED 0
@@ -114,6 +114,12 @@ battery_get_voltage <= USED 0
 ;FILE ble_arp.o
 ;FILE env.o
 ;FILE env_task.o
+;FILE eventrecorder.o
+EventRecord2 <= USED 0
+EventRecord4 <= USED 0
+EventRecorderClockUpdate <= USED 0
+EventRecorderDisable <= USED 0
+EventRecorderStop <= USED 0
 ;FILE gpio.o
 GPIO_ConfigurePinPower <= USED 0
 GPIO_DisablePorPin <= USED 0
@@ -137,15 +143,10 @@ hw_otpc_read <= USED 0
 hw_otpc_word_prog_and_verify <= USED 0
 hw_otpc_word_read <= USED 0
 ;FILE i2c.o
-i2c_init <= USED 0
 i2c_master_receive_buffer_async <= USED 0
-i2c_master_receive_buffer_sync <= USED 0
 i2c_master_transmit_buffer_async <= USED 0
-i2c_master_transmit_buffer_sync <= USED 0
 i2c_register_int <= USED 0
 i2c_release <= USED 0
-i2c_setup_master <= USED 0
-i2c_setup_slave <= USED 0
 i2c_slave_receive_buffer_async <= USED 0
 i2c_slave_receive_buffer_sync <= USED 0
 i2c_slave_transmit_buffer_async <= USED 0
@@ -177,6 +178,11 @@ otp_cs_get_low_power_clock <= USED 0
 ;FILE otp_hdr.o
 ;FILE patch.o
 ;FILE prf.o
+;FILE retarget_io.o
+__aeabi_assert <= USED 0
+__backspace <= USED 0
+abort <= USED 0
+fgetc <= USED 0
 ;FILE rf_531.o
 dcoff_calibration <= USED 0
 dis_kdco_cal <= USED 0
@@ -249,6 +255,7 @@ spi_flash_write_enable_volatile <= USED 0
 spi_flash_write_status_config_reg <= USED 0
 spi_flash_write_status_reg <= USED 0
 ;FILE startup_da14531.o
+;FILE sts40.o
 ;FILE syscntl.o
 syscntl_dcdc_turn_off <= USED 0
 syscntl_dcdc_turn_on_in_buck <= USED 0
@@ -256,6 +263,9 @@ syscntl_por_vbat_high_cfg <= USED 0
 syscntl_por_vbat_low_cfg <= USED 0
 ;FILE system_da14531.o
 SystemCoreClockUpdate <= USED 0
+;FILE systick.o
+systick_register_callback <= USED 0
+systick_value <= USED 0
 ;FILE timer1.o
 timer1_count_config <= USED 0
 timer1_count_register_callback <= USED 0

@@ -44,10 +44,11 @@
 #include "rf_531.h"
 #endif
 
-uint8_t temp = 0;
+uint16_t temp = 0;
 
-void meas_temp(){
-	temp += (rand() %50);
+void set_temp_val(uint16_t* temp_val){
+	temp = *temp_val;
+	printf("<ENV_TASK>: Temperature value set to: %d\n", *temp_val);
 }
 
 /**
@@ -144,10 +145,11 @@ static int gapm_temp_ind_handler(ke_msg_id_t const msgid,
     {
         // Send data to peer device
         struct gattc_read_cfm* cfm = KE_MSG_ALLOC_DYN(GATTC_READ_CFM, KE_BUILD_ID(TASK_GATTC, env_env->conidx_saved), dest_id,
-                                                        gattc_read_cfm, sizeof(uint8_t));
-        cfm->length = sizeof(uint8_t);
+                                                        gattc_read_cfm, sizeof(uint16_t));
+        cfm->length = sizeof(uint16_t);
 
-            cfm->value[0] = temp;
+            cfm->value[0] = temp & 0xff;  // lsb
+						cfm->value[1] = temp >> 8;  // msb
 #else
             // DA14585, DA14586
             cfm->value[0] = rwip_rf.txpwr_dbm_get(ble_txpwr_getf(gapc_get_conhdl(env_env->conidx_saved)), MOD_GFSK);
@@ -156,6 +158,7 @@ static int gapm_temp_ind_handler(ke_msg_id_t const msgid,
         cfm->status = GAP_ERR_NO_ERROR;
 
         // Send value to peer device.
+				//printf("Value sent: %d\n", cfm->value[0]);
         ke_msg_send(cfm);
 
         ke_state_set(dest_id, PROXR_IDLE);

@@ -121,7 +121,7 @@ extern const struct ke_state_handler env_default_handler;
 
 #endif //BLE_PROX_REPORTER
 
-void meas_temp(void);
+void set_temp_val(uint16_t* temp_val);
 /// @} PROXRTASK
 
 

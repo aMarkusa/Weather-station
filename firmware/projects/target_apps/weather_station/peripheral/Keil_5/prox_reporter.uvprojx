@@ -1049,6 +1049,11 @@
                 </FileArmAds>
               </FileOption>
             </File>
+            <File>
+              <FileName>systick.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\systick.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -1264,10 +1269,23 @@
               <FileType>1</FileType>
               <FilePath>.\user_peripheral.c</FilePath>
             </File>
+            <File>
+              <FileName>sts40.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\sts40.c</FilePath>
+            </File>
+            <File>
+              <FileName>sts40.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\sts40.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
           <GroupName>New Group</GroupName>
+        </Group>
+        <Group>
+          <GroupName>::Compiler</GroupName>
         </Group>
       </Groups>
     </Target>
@@ -2314,6 +2332,11 @@
                 </FileArmAds>
               </FileOption>
             </File>
+            <File>
+              <FileName>systick.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\systick.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -2529,10 +2552,23 @@
               <FileType>1</FileType>
               <FilePath>.\user_peripheral.c</FilePath>
             </File>
+            <File>
+              <FileName>sts40.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\sts40.c</FilePath>
+            </File>
+            <File>
+              <FileName>sts40.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\sts40.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
           <GroupName>New Group</GroupName>
+        </Group>
+        <Group>
+          <GroupName>::Compiler</GroupName>
         </Group>
       </Groups>
     </Target>
@@ -2578,8 +2614,8 @@
             <NotGenerated>0</NotGenerated>
             <InvalidFlash>1</InvalidFlash>
           </TargetStatus>
-          <OutputDirectory>.\out_DA14531\Objects\</OutputDirectory>
-          <OutputName>prox_reporter_531</OutputName>
+          <OutputDirectory>..\..\..\..\..\..\..\..\..\FlashProgrammer\weather_station\peripheral\</OutputDirectory>
+          <OutputName>periheral_531</OutputName>
           <CreateExecutable>1</CreateExecutable>
           <CreateLib>0</CreateLib>
           <CreateHexFile>1</CreateHexFile>
@@ -3375,6 +3411,11 @@
               <FileType>1</FileType>
               <FilePath>..\..\..\..\..\sdk\platform\driver\timer\timer1.c</FilePath>
             </File>
+            <File>
+              <FileName>systick.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\systick.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -3590,10 +3631,23 @@
               <FileType>1</FileType>
               <FilePath>.\user_peripheral.c</FilePath>
             </File>
+            <File>
+              <FileName>sts40.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\sts40.c</FilePath>
+            </File>
+            <File>
+              <FileName>sts40.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\sts40.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
           <GroupName>New Group</GroupName>
+        </Group>
+        <Group>
+          <GroupName>::Compiler</GroupName>
         </Group>
       </Groups>
     </Target>
@@ -3601,8 +3655,36 @@
 
   <RTE>
     <apis/>
-    <components/>
-    <files/>
+    <components>
+      <component Cbundle="ARM Compiler" Cclass="Compiler" Cgroup="Event Recorder" Cvariant="DAP" Cvendor="Keil" Cversion="1.5.1" condition="Cortex-M Device">
+        <package name="ARM_Compiler" schemaVersion="1.7.7" url="https://www.keil.com/pack/" vendor="Keil" version="1.7.2"/>
+        <targetInfos>
+          <targetInfo name="DA14531"/>
+          <targetInfo name="DA14585"/>
+          <targetInfo name="DA14586"/>
+        </targetInfos>
+      </component>
+      <component Cbundle="ARM Compiler" Cclass="Compiler" Cgroup="I/O" Csub="STDOUT" Cvariant="EVR" Cvendor="Keil" Cversion="1.2.0" condition="ARMCC Cortex-M with EVR">
+        <package name="ARM_Compiler" schemaVersion="1.7.7" url="https://www.keil.com/pack/" vendor="Keil" version="1.7.2"/>
+        <targetInfos>
+          <targetInfo name="DA14531"/>
+          <targetInfo name="DA14585"/>
+          <targetInfo name="DA14586"/>
+        </targetInfos>
+      </component>
+    </components>
+    <files>
+      <file attr="config" category="header" name="Config\EventRecorderConf.h" version="1.1.0">
+        <instance index="0">RTE\Compiler\EventRecorderConf.h</instance>
+        <component Cbundle="ARM Compiler" Cclass="Compiler" Cgroup="Event Recorder" Cvariant="DAP" Cvendor="Keil" Cversion="1.5.1" condition="Cortex-M Device"/>
+        <package name="ARM_Compiler" schemaVersion="1.7.7" url="https://www.keil.com/pack/" vendor="Keil" version="1.7.2"/>
+        <targetInfos>
+          <targetInfo name="DA14531"/>
+          <targetInfo name="DA14585"/>
+          <targetInfo name="DA14586"/>
+        </targetInfos>
+      </file>
+    </files>
   </RTE>
 
 </Project>

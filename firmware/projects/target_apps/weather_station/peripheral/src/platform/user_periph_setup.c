@@ -66,17 +66,13 @@ void GPIO_reservations(void)
     RESERVE_GPIO(DESCRIPTIVE_NAME, GPIO_PORT_0, GPIO_PIN_1, PID_GPIO);
 */
     // Push Button
-    RESERVE_GPIO(PUSH_BUTTON, GPIO_BUTTON_PORT, GPIO_BUTTON_PIN, PID_GPIO);
+  
 
 #if defined (__DA14531__) && (defined (CFG_APP_GOTO_HIBERNATION) || defined (CFG_APP_GOTO_STATEFUL_HIBERNATION))
     // Wake up from hibernation pin
     RESERVE_GPIO(HIB_WAKE_UP, HIB_WAKE_UP_PORT, HIB_WAKE_UP_PIN, PID_GPIO);
 #endif
 
-#if BLE_PROX_REPORTER
-    // Alert LED
-    RESERVE_GPIO(GREEN_LED, GPIO_ALERT_LED_PORT, GPIO_ALERT_LED_PIN, PID_GPIO);
-#endif
 
 #if (BLE_BATT_SERVER && USE_BAT_LEVEL_ALERT)
     // Battery alert LED
@@ -102,6 +98,11 @@ void GPIO_reservations(void)
     RESERVE_GPIO(I2C_SDA, I2C_SDA_PORT, I2C_SDA_PIN, PID_I2C_SDA);
 #endif
 
+// STS40
+		RESERVE_GPIO(SENSOR_POWER, SENSOR_POWER_PORT, SENSOR_POWER_PIN, PID_GPIO); 
+    RESERVE_GPIO(I2C_SCL, TEMP_I2C_SCL_PORT, TEMP_I2C_SCL_PIN, PID_I2C_SCL);
+    RESERVE_GPIO(I2C_SDA, TEMP_I2C_SDA_PORT, TEMP_I2C_SDA_PIN, PID_I2C_SDA);
+
 #if (USE_RANGE_EXT)
     // Range extender
     range_ext.init_gpio(NULL);
@@ -121,18 +122,16 @@ void set_pad_functions(void)        // set gpio port function mode
     GPIO_ConfigurePin(GPIO_PORT_2, GPIO_PIN_3, OUTPUT, PID_GPIO, true);
 #endif
 
-    // Push Button
-    GPIO_ConfigurePin(GPIO_BUTTON_PORT, GPIO_BUTTON_PIN, INPUT_PULLUP, PID_GPIO, false);
+    // STS40 
+		GPIO_ConfigurePin(TEMP_I2C_SCL_PORT, TEMP_I2C_SCL_PIN, INPUT_PULLUP, PID_I2C_SCL, false);
+    GPIO_ConfigurePin(TEMP_I2C_SDA_PORT, TEMP_I2C_SDA_PIN, INPUT_PULLUP, PID_I2C_SDA, false);
+		GPIO_ConfigurePin(SENSOR_POWER_PORT, SENSOR_POWER_PIN, OUTPUT, PID_GPIO, false);
 
 #if defined (__DA14531__) && (defined (CFG_APP_GOTO_HIBERNATION) || defined (CFG_APP_GOTO_STATEFUL_HIBERNATION))
     // Wake up from hibernation pin
     GPIO_ConfigurePin(HIB_WAKE_UP_PORT, HIB_WAKE_UP_PIN, INPUT_PULLUP, PID_GPIO, false);
 #endif
 
-#if (BLE_PROX_REPORTER)
-    // Alert LED
-    GPIO_ConfigurePin(GPIO_ALERT_LED_PORT, GPIO_ALERT_LED_PIN, OUTPUT, PID_GPIO, false);
-#endif
 
 #if (BLE_BATT_SERVER && USE_BAT_LEVEL_ALERT)
     // Battery alert LED
@@ -224,8 +223,24 @@ static const i2c_eeprom_cfg_t i2c_eeprom_cfg = {
 };
 #endif
 
+// Configuration struct for I2C
+static const i2c_cfg_t i2c_cfg = {
+    .clock_cfg.ss_hcnt = I2C_SS_SCL_HCNT_REG_RESET,
+    .clock_cfg.ss_lcnt = I2C_SS_SCL_LCNT_REG_RESET,
+    .clock_cfg.fs_hcnt = I2C_FS_SCL_HCNT_REG_RESET,
+    .clock_cfg.fs_lcnt = I2C_FS_SCL_LCNT_REG_RESET,
+    .restart_en = I2C_RESTART_ENABLE,
+    .speed = TEMP_I2C_SPEED_MODE,
+    .mode = I2C_MODE_MASTER,
+    .addr_mode = TEMP_I2C_ADDRESS_MODE,
+    .address = TEMP_I2C_SLAVE_ADDRESS,
+    .tx_fifo_level = 16,
+    .rx_fifo_level = 16,
+};
+
 void periph_init(void)  // set i2c, spi, uart, uart2 serial clks
 {
+	i2c_init(&i2c_cfg);
 #if defined (__DA14531__)
     // Disable HW Reset functionality of P0_0
     GPIO_Disable_HW_Reset();

@@ -3,7 +3,7 @@
 <title>Static Call Graph - [.\out_DA14531\Objects\prox_reporter_531.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image .\out_DA14531\Objects\prox_reporter_531.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060960: Last Updated: Wed Mar 29 18:58:27 2023
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060960: Last Updated: Wed Mar 29 19:27:16 2023
 <BR><P>
 <H3>Maximum Stack Usage =        128 bytes + Unknown(Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
@@ -623,16 +623,16 @@ Global Symbols
 </UL>
 
 <P><STRONG><a name="[163]"></a>ke_msg_alloc</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, da14531_symbols.txt(ABSOLUTE))
-<BR><BR>[Called By]<UL><LI><a href="#[87]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;gapm_cmp_evt_handler
-<LI><a href="#[86]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;gapm_temp_ind_handler
-<LI><a href="#[85]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;gattc_read_req_ind_handler
-<LI><a href="#[84]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;env_cleanup
-<LI><a href="#[8e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;gapc_get_dev_info_req_ind_handler
+<BR><BR>[Called By]<UL><LI><a href="#[8e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;gapc_get_dev_info_req_ind_handler
 <LI><a href="#[89]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;gapm_device_ready_ind_handler
 <LI><a href="#[88]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;app_env_create_db
 <LI><a href="#[17d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;app_easy_timer_cancel
 <LI><a href="#[17a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;app_easy_gap_dev_config_create_msg
 <LI><a href="#[178]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;app_easy_gap_undirected_advertise_start_create_msg
+<LI><a href="#[87]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;gapm_cmp_evt_handler
+<LI><a href="#[86]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;gapm_temp_ind_handler
+<LI><a href="#[85]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;gattc_read_req_ind_handler
+<LI><a href="#[84]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;env_cleanup
 <LI><a href="#[18b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;cancel_timer_handler
 <LI><a href="#[187]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;create_timer
 <LI><a href="#[186]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ltk_exch_create_msg
@@ -641,11 +641,7 @@ Global Symbols
 </UL>
 
 <P><STRONG><a name="[164]"></a>ke_msg_send</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, da14531_symbols.txt(ABSOLUTE))
-<BR><BR>[Called By]<UL><LI><a href="#[87]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;gapm_cmp_evt_handler
-<LI><a href="#[86]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;gapm_temp_ind_handler
-<LI><a href="#[85]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;gattc_read_req_ind_handler
-<LI><a href="#[84]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;env_cleanup
-<LI><a href="#[8e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;gapc_get_dev_info_req_ind_handler
+<BR><BR>[Called By]<UL><LI><a href="#[8e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;gapc_get_dev_info_req_ind_handler
 <LI><a href="#[89]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;gapm_device_ready_ind_handler
 <LI><a href="#[88]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;app_env_create_db
 <LI><a href="#[17d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;app_easy_timer_cancel
@@ -654,6 +650,10 @@ Global Symbols
 <LI><a href="#[173]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;app_easy_security_tk_exch
 <LI><a href="#[172]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;app_easy_security_send_pairing_rsp
 <LI><a href="#[176]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;app_easy_security_ltk_exch
+<LI><a href="#[87]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;gapm_cmp_evt_handler
+<LI><a href="#[86]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;gapm_temp_ind_handler
+<LI><a href="#[85]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;gattc_read_req_ind_handler
+<LI><a href="#[84]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;env_cleanup
 <LI><a href="#[18b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;cancel_timer_handler
 <LI><a href="#[187]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;create_timer
 </UL>
@@ -672,12 +672,12 @@ Global Symbols
 <P><STRONG><a name="[160]"></a>ke_state_set</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, da14531_symbols.txt(ABSOLUTE))
 <BR><BR>[Called By]<UL><LI><a href="#[7e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PATCHED_llcp_length_rsp_handler
 <LI><a href="#[f0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;app_init
+<LI><a href="#[8c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;gapc_connection_req_ind_handler
+<LI><a href="#[17c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;app_easy_gap_undirected_advertise_start
 <LI><a href="#[87]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;gapm_cmp_evt_handler
 <LI><a href="#[86]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;gapm_temp_ind_handler
 <LI><a href="#[85]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;gattc_read_req_ind_handler
 <LI><a href="#[81]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;env_init
-<LI><a href="#[8c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;gapc_connection_req_ind_handler
-<LI><a href="#[17c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;app_easy_gap_undirected_advertise_start
 <LI><a href="#[b4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PATCHED_llm_con_req_ind
 </UL>
 
@@ -686,12 +686,12 @@ Global Symbols
 <LI><a href="#[7e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PATCHED_llcp_length_rsp_handler
 <LI><a href="#[7d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PATCHED_llcp_length_req_handler
 <LI><a href="#[7c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PATCHED_llc_data_ind_handler
-<LI><a href="#[87]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;gapm_cmp_evt_handler
-<LI><a href="#[86]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;gapm_temp_ind_handler
-<LI><a href="#[85]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;gattc_read_req_ind_handler
 <LI><a href="#[8d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;gapc_disconnect_ind_handler
 <LI><a href="#[8c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;gapc_connection_req_ind_handler
 <LI><a href="#[89]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;gapm_device_ready_ind_handler
+<LI><a href="#[87]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;gapm_cmp_evt_handler
+<LI><a href="#[86]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;gapm_temp_ind_handler
+<LI><a href="#[85]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;gattc_read_req_ind_handler
 </UL>
 
 <P><STRONG><a name="[15d]"></a>ke_task_msg_flush</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, da14531_symbols.txt(ABSOLUTE))
@@ -702,8 +702,8 @@ Global Symbols
 <BR>[Address Reference Count : 1]<UL><LI> jump_table.o(.constdata)
 </UL>
 <P><STRONG><a name="[189]"></a>ke_timer_set</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, da14531_symbols.txt(ABSOLUTE))
-<BR><BR>[Called By]<UL><LI><a href="#[ad]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;app_timer_api_process_handler
-<LI><a href="#[187]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;create_timer
+<BR><BR>[Called By]<UL><LI><a href="#[187]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;create_timer
+<LI><a href="#[ad]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;app_timer_api_process_handler
 </UL>
 
 <P><STRONG><a name="[18c]"></a>ke_timer_clear</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, da14531_symbols.txt(ABSOLUTE))
@@ -735,11 +735,11 @@ Global Symbols
 <P><STRONG><a name="[da]"></a>__aeabi_uidivmod</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, da14531_symbols.txt(ABSOLUTE))
 <BR><BR>[Called By]<UL><LI><a href="#[50]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;lld_sleep_compensate_func
 <LI><a href="#[d9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;lld_sleep_us_2_lpcycles_rcx_func
-<LI><a href="#[119]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;spi_set_speed
-<LI><a href="#[2a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;rf_rssi_convert
 <LI><a href="#[12e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;rtc_set_alarm
 <LI><a href="#[12c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;calendar_to_bcd
 <LI><a href="#[12b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;time_to_bcd
+<LI><a href="#[119]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;spi_set_speed
+<LI><a href="#[2a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;rf_rssi_convert
 </UL>
 
 <P><STRONG><a name="[115]"></a>__aeabi_idivmod</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, da14531_symbols.txt(ABSOLUTE))
@@ -788,9 +788,9 @@ Global Symbols
 </UL>
 
 <P><STRONG><a name="[15e]"></a>__aeabi_memclr</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, da14531_symbols.txt(ABSOLUTE))
-<BR><BR>[Called By]<UL><LI><a href="#[81]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;env_init
-<LI><a href="#[17a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;app_easy_gap_dev_config_create_msg
+<BR><BR>[Called By]<UL><LI><a href="#[17a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;app_easy_gap_dev_config_create_msg
 <LI><a href="#[173]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;app_easy_security_tk_exch
+<LI><a href="#[81]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;env_init
 </UL>
 
 <P><STRONG><a name="[f3]"></a>__aeabi_memclr4</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, da14531_symbols.txt(ABSOLUTE))
@@ -890,9 +890,9 @@ Global Symbols
 <BR>[Address Reference Count : 1]<UL><LI> app_task.o(.constdata)
 </UL>
 <P><STRONG><a name="[180]"></a>app_std_process_event</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, da14531_symbols.txt(ABSOLUTE))
-<BR><BR>[Called By]<UL><LI><a href="#[b0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;app_env_process_handler
-<LI><a href="#[af]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;app_sec_process_handler
+<BR><BR>[Called By]<UL><LI><a href="#[af]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;app_sec_process_handler
 <LI><a href="#[ac]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;app_gap_process_handler
+<LI><a href="#[b0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;app_env_process_handler
 </UL>
 
 <P><STRONG><a name="[1e7]"></a>app_get_address_type_ROM</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, da14531_symbols.txt(ABSOLUTE), UNUSED)
@@ -1533,8 +1533,8 @@ Global Symbols
 <P><STRONG><a name="[11c]"></a>spi_set_bitmode</STRONG> (Thumb, 72 bytes, Stack size 12 bytes, spi_531.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 12<LI>Call Chain = spi_set_bitmode
 </UL>
-<BR>[Called By]<UL><LI><a href="#[122]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;spi_flash_read_status_reg
-<LI><a href="#[124]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;spi_flash_power_down
+<BR>[Called By]<UL><LI><a href="#[124]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;spi_flash_power_down
+<LI><a href="#[122]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;spi_flash_read_status_reg
 <LI><a href="#[11a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;spi_initialize
 </UL>
 
@@ -1566,19 +1566,19 @@ Global Symbols
 <P><STRONG><a name="[11e]"></a>spi_transaction</STRONG> (Thumb, 24 bytes, Stack size 4 bytes, spi_531.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 20<LI>Call Chain = spi_transaction &rArr; spi_access
 </UL>
-<BR>[Calls]<UL><LI><a href="#[11f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;spi_cs_low
+<BR>[Calls]<UL><LI><a href="#[120]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;spi_access
 <LI><a href="#[121]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;spi_cs_high
-<LI><a href="#[120]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;spi_access
+<LI><a href="#[11f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;spi_cs_low
 </UL>
-<BR>[Called By]<UL><LI><a href="#[122]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;spi_flash_read_status_reg
-<LI><a href="#[124]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;spi_flash_power_down
+<BR>[Called By]<UL><LI><a href="#[124]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;spi_flash_power_down
+<LI><a href="#[122]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;spi_flash_read_status_reg
 </UL>
 
 <P><STRONG><a name="[122]"></a>spi_flash_read_status_reg</STRONG> (Thumb, 20 bytes, Stack size 8 bytes, spi_flash.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 28<LI>Call Chain = spi_flash_read_status_reg &rArr; spi_transaction &rArr; spi_access
 </UL>
-<BR>[Calls]<UL><LI><a href="#[11c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;spi_set_bitmode
-<LI><a href="#[11e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;spi_transaction
+<BR>[Calls]<UL><LI><a href="#[11e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;spi_transaction
+<LI><a href="#[11c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;spi_set_bitmode
 </UL>
 <BR>[Called By]<UL><LI><a href="#[123]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;spi_flash_is_busy
 </UL>
@@ -1599,8 +1599,8 @@ Global Symbols
 <BR><BR>[Stack]<UL><LI>Max Depth = 44<LI>Call Chain = spi_flash_power_down &rArr; spi_flash_is_busy &rArr; spi_flash_read_status_reg &rArr; spi_transaction &rArr; spi_access
 </UL>
 <BR>[Calls]<UL><LI><a href="#[123]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;spi_flash_is_busy
-<LI><a href="#[11c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;spi_set_bitmode
 <LI><a href="#[11e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;spi_transaction
+<LI><a href="#[11c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;spi_set_bitmode
 </UL>
 <BR>[Called By]<UL><LI><a href="#[a1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;app_advertise_complete
 </UL>
@@ -2113,9 +2113,9 @@ Global Symbols
 <P><STRONG><a name="[17c]"></a>app_easy_gap_undirected_advertise_start</STRONG> (Thumb, 26 bytes, Stack size 8 bytes, app.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 32<LI>Call Chain = app_easy_gap_undirected_advertise_start &rArr; app_easy_gap_undirected_advertise_start_create_msg
 </UL>
-<BR>[Calls]<UL><LI><a href="#[160]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ke_state_set
+<BR>[Calls]<UL><LI><a href="#[178]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;app_easy_gap_undirected_advertise_start_create_msg
+<LI><a href="#[160]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ke_state_set
 <LI><a href="#[164]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ke_msg_send
-<LI><a href="#[178]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;app_easy_gap_undirected_advertise_start_create_msg
 </UL>
 <BR>[Called By]<UL><LI><a href="#[169]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;app_easy_gap_undirected_advertise_with_timeout_start
 </UL>
@@ -2141,8 +2141,8 @@ Global Symbols
 <P><STRONG><a name="[b1]"></a>app_easy_gap_dev_configure</STRONG> (Thumb, 18 bytes, Stack size 8 bytes, app.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 24<LI>Call Chain = app_easy_gap_dev_configure &rArr; app_easy_gap_dev_config_create_msg
 </UL>
-<BR>[Calls]<UL><LI><a href="#[164]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ke_msg_send
-<LI><a href="#[17a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;app_easy_gap_dev_config_create_msg
+<BR>[Calls]<UL><LI><a href="#[17a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;app_easy_gap_dev_config_create_msg
+<LI><a href="#[164]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ke_msg_send
 </UL>
 <BR>[Called By]<UL><LI><a href="#[8a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;gapm_cmp_evt_handler
 </UL>
@@ -2261,7 +2261,7 @@ Global Symbols
 </UL>
 <BR>[Calls]<UL><LI><a href="#[165]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;meas_temp
 </UL>
-<BR>[Called By]<UL><LI><a href="#[f1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;user_app_on_init
+<BR>[Called By]<UL><LI><a href="#[a0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;user_app_on_set_dev_config_complete
 </UL>
 
 <P><STRONG><a name="[88]"></a>app_env_create_db</STRONG> (Thumb, 52 bytes, Stack size 8 bytes, app_env.o(.text))
@@ -2325,20 +2325,20 @@ Global Symbols
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> app_entry_point.o(.constdata)
 </UL>
-<P><STRONG><a name="[a0]"></a>user_app_on_set_dev_config_complete</STRONG> (Thumb, 8 bytes, Stack size 8 bytes, user_peripheral.o(.text))
+<P><STRONG><a name="[a0]"></a>user_app_on_set_dev_config_complete</STRONG> (Thumb, 12 bytes, Stack size 8 bytes, user_peripheral.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 72<LI>Call Chain = user_app_on_set_dev_config_complete &rArr; default_app_on_set_dev_config_complete &rArr; default_advertise_operation &rArr; app_easy_gap_undirected_advertise_with_timeout_start &rArr; app_easy_gap_undirected_advertise_start &rArr; app_easy_gap_undirected_advertise_start_create_msg
 </UL>
 <BR>[Calls]<UL><LI><a href="#[170]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;default_app_on_set_dev_config_complete
+<LI><a href="#[18e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;app_meas_temp
 </UL>
 <BR>[Called By]<UL><LI><a href="#[8a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;gapm_cmp_evt_handler
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> app_entry_point.o(.constdata)
 </UL>
-<P><STRONG><a name="[f1]"></a>user_app_on_init</STRONG> (Thumb, 12 bytes, Stack size 8 bytes, user_peripheral.o(.text))
-<BR><BR>[Stack]<UL><LI>Max Depth = 24<LI>Call Chain = user_app_on_init &rArr; app_meas_temp &rArr; meas_temp
+<P><STRONG><a name="[f1]"></a>user_app_on_init</STRONG> (Thumb, 8 bytes, Stack size 8 bytes, user_peripheral.o(.text))
+<BR><BR>[Stack]<UL><LI>Max Depth = 16<LI>Call Chain = user_app_on_init &rArr; default_app_on_init
 </UL>
 <BR>[Calls]<UL><LI><a href="#[16a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;default_app_on_init
-<LI><a href="#[18e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;app_meas_temp
 </UL>
 <BR>[Called By]<UL><LI><a href="#[c1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;system_init
 </UL>
@@ -2411,11 +2411,11 @@ Global Symbols
 <BR><BR>[Stack]<UL><LI>Max Depth = 24<LI>Call Chain = PATCHED_smpc_recv_public_key_exchange_pdu
 </UL>
 <BR>[Calls]<UL><LI><a href="#[f2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memcpy
+<LI><a href="#[1a1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;memcmp
+<LI><a href="#[1b6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;smpc_dhkey_calc_start
 <LI><a href="#[1b0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;gapc_get_role
 <LI><a href="#[1b2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;smpc_pdu_send
 <LI><a href="#[1b3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;smpc_pairing_end
-<LI><a href="#[1a1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;memcmp
-<LI><a href="#[1b6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;smpc_dhkey_calc_start
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> patch.o(.constdata)
 </UL>
@@ -2445,8 +2445,8 @@ Global Symbols
 <P><STRONG><a name="[7e]"></a>PATCHED_llcp_length_rsp_handler</STRONG> (Thumb, 134 bytes, Stack size 40 bytes, patch.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 40<LI>Call Chain = PATCHED_llcp_length_rsp_handler
 </UL>
-<BR>[Calls]<UL><LI><a href="#[160]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ke_state_set
-<LI><a href="#[166]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ke_state_get
+<BR>[Calls]<UL><LI><a href="#[166]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ke_state_get
+<LI><a href="#[160]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ke_state_set
 <LI><a href="#[1bb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;llc_util_dicon_procedure
 <LI><a href="#[1be]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;llc_length_ind
 <LI><a href="#[18c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ke_timer_clear
@@ -2732,33 +2732,33 @@ Local Symbols
 <P><STRONG><a name="[85]"></a>gattc_read_req_ind_handler</STRONG> (Thumb, 132 bytes, Stack size 40 bytes, env_task.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 40<LI>Call Chain = gattc_read_req_ind_handler
 </UL>
-<BR>[Calls]<UL><LI><a href="#[160]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ke_state_set
+<BR>[Calls]<UL><LI><a href="#[167]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;prf_env_get
+<LI><a href="#[166]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ke_state_get
+<LI><a href="#[160]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ke_state_set
 <LI><a href="#[164]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ke_msg_send
 <LI><a href="#[163]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ke_msg_alloc
-<LI><a href="#[167]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;prf_env_get
-<LI><a href="#[166]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ke_state_get
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> env_task.o(.constdata)
 </UL>
 <P><STRONG><a name="[86]"></a>gapm_temp_ind_handler</STRONG> (Thumb, 76 bytes, Stack size 16 bytes, env_task.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 16<LI>Call Chain = gapm_temp_ind_handler
 </UL>
-<BR>[Calls]<UL><LI><a href="#[160]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ke_state_set
+<BR>[Calls]<UL><LI><a href="#[167]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;prf_env_get
+<LI><a href="#[166]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ke_state_get
+<LI><a href="#[160]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ke_state_set
 <LI><a href="#[164]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ke_msg_send
 <LI><a href="#[163]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ke_msg_alloc
-<LI><a href="#[167]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;prf_env_get
-<LI><a href="#[166]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ke_state_get
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> env_task.o(.constdata)
 </UL>
 <P><STRONG><a name="[87]"></a>gapm_cmp_evt_handler</STRONG> (Thumb, 78 bytes, Stack size 16 bytes, env_task.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 16<LI>Call Chain = gapm_cmp_evt_handler
 </UL>
-<BR>[Calls]<UL><LI><a href="#[160]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ke_state_set
+<BR>[Calls]<UL><LI><a href="#[167]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;prf_env_get
+<LI><a href="#[166]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ke_state_get
+<LI><a href="#[160]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ke_state_set
 <LI><a href="#[164]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ke_msg_send
 <LI><a href="#[163]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ke_msg_alloc
-<LI><a href="#[167]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;prf_env_get
-<LI><a href="#[166]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ke_state_get
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> env_task.o(.constdata)
 </UL>
@@ -2771,8 +2771,8 @@ Local Symbols
 <BR><BR>[Stack]<UL><LI>Max Depth = 24<LI>Call Chain = app_easy_gap_undirected_advertise_start_create_msg
 </UL>
 <BR>[Calls]<UL><LI><a href="#[f2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memcpy
-<LI><a href="#[163]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ke_msg_alloc
 <LI><a href="#[179]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;append_device_name
+<LI><a href="#[163]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ke_msg_alloc
 </UL>
 <BR>[Called By]<UL><LI><a href="#[17c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;app_easy_gap_undirected_advertise_start
 </UL>
@@ -2796,9 +2796,9 @@ Local Symbols
 <P><STRONG><a name="[89]"></a>gapm_device_ready_ind_handler</STRONG> (Thumb, 40 bytes, Stack size 8 bytes, app_task.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = gapm_device_ready_ind_handler
 </UL>
-<BR>[Calls]<UL><LI><a href="#[164]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ke_msg_send
+<BR>[Calls]<UL><LI><a href="#[166]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ke_state_get
+<LI><a href="#[164]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ke_msg_send
 <LI><a href="#[163]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ke_msg_alloc
-<LI><a href="#[166]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ke_state_get
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> app_task.o(.constdata)
 </UL>
@@ -2815,10 +2815,10 @@ Local Symbols
 <BR><BR>[Stack]<UL><LI>Max Depth = 96<LI>Call Chain = gapc_connection_req_ind_handler &rArr; user_app_on_connection &rArr; default_app_on_connection &rArr; default_advertise_operation &rArr; app_easy_gap_undirected_advertise_with_timeout_start &rArr; app_easy_gap_undirected_advertise_start &rArr; app_easy_gap_undirected_advertise_start_create_msg
 </UL>
 <BR>[Calls]<UL><LI><a href="#[f2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memcpy
-<LI><a href="#[160]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ke_state_set
 <LI><a href="#[9e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;user_app_on_connection
 <LI><a href="#[17f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;app_easy_gap_confirm
 <LI><a href="#[166]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ke_state_get
+<LI><a href="#[160]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ke_state_set
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> app_task.o(.constdata)
 </UL>
@@ -2837,11 +2837,11 @@ Local Symbols
 <BR><BR>[Stack]<UL><LI>Max Depth = 64<LI>Call Chain = gapc_get_dev_info_req_ind_handler &rArr; default_app_on_get_dev_name
 </UL>
 <BR>[Calls]<UL><LI><a href="#[f2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memcpy
-<LI><a href="#[164]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ke_msg_send
-<LI><a href="#[163]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ke_msg_alloc
 <LI><a href="#[a5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;default_app_on_get_dev_slv_pref_params
 <LI><a href="#[a4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;default_app_on_get_dev_appearance
 <LI><a href="#[a3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;default_app_on_get_dev_name
+<LI><a href="#[164]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ke_msg_send
+<LI><a href="#[163]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ke_msg_alloc
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> app_task.o(.constdata)
 </UL>
@@ -2915,11 +2915,11 @@ Local Symbols
 <BR>[Calls]<UL><LI><a href="#[18a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;arch_ble_force_wakeup
 <LI><a href="#[164]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ke_msg_send
 <LI><a href="#[163]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ke_msg_alloc
-<LI><a href="#[188]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;app_check_BLE_active
 <LI><a href="#[189]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ke_timer_set
+<LI><a href="#[188]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;app_check_BLE_active
 </UL>
-<BR>[Called By]<UL><LI><a href="#[ad]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;app_timer_api_process_handler
-<LI><a href="#[17e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;app_easy_timer
+<BR>[Called By]<UL><LI><a href="#[17e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;app_easy_timer
+<LI><a href="#[ad]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;app_timer_api_process_handler
 </UL>
 
 <P><STRONG><a name="[2d]"></a>timer_canceled_handler</STRONG> (Thumb, 2 bytes, Stack size 0 bytes, app_easy_timer.o(.text))
@@ -2958,6 +2958,7 @@ Local Symbols
 <BR><BR>[Stack]<UL><LI>Max Depth = 24<LI>Call Chain = PATCHED_smpc_recv_pair_rand_pdu
 </UL>
 <BR>[Calls]<UL><LI><a href="#[f2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memcpy
+<LI><a href="#[1a1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;memcmp
 <LI><a href="#[1b0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;gapc_get_role
 <LI><a href="#[1b5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;smpc_generate_f5
 <LI><a href="#[1b4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;smpc_generate_g2
@@ -2965,7 +2966,6 @@ Local Symbols
 <LI><a href="#[1b2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;smpc_pdu_send
 <LI><a href="#[1b3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;smpc_pairing_end
 <LI><a href="#[1b1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;smpc_generate_e1
-<LI><a href="#[1a1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;memcmp
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> patch.o(.constdata)
 </UL><P>

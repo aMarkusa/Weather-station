@@ -33,6 +33,13 @@
  * DEFINES
  ****************************************************************************************
  */
+ 
+ /****************************************************************************************/
+/* SENSOR POWER IO configuration                                                                    */
+/****************************************************************************************/
+#define			SENSOR_POWER_PORT				GPIO_PORT_0
+#define     SENSOR_POWER_PIN				GPIO_PIN_7
+
 
 
 /****************************************************************************************/
@@ -113,7 +120,20 @@
 /****************************************************************************************/
 /* I2C configuration                                                                    */
 /****************************************************************************************/
-// Define I2C Pads
+
+// Temperature sensor
+#define TEMP_I2C_SCL_PORT                GPIO_PORT_0
+#define TEMP_I2C_SCL_PIN                 GPIO_PIN_9
+
+#define TEMP_I2C_SDA_PORT                GPIO_PORT_0
+#define TEMP_I2C_SDA_PIN                 GPIO_PIN_8
+
+// Define I2C Configuration
+#define TEMP_I2C_SLAVE_ADDRESS           (0x46)
+#define TEMP_I2C_SPEED_MODE              I2C_SPEED_STANDARD
+#define TEMP_I2C_ADDRESS_MODE            I2C_ADDRESSING_7B
+
+/*// Define I2C Pads
 #define I2C_SCL_PORT                GPIO_PORT_0
 #define I2C_SCL_PIN                 GPIO_PIN_2
 
@@ -124,7 +144,7 @@
 #define I2C_SLAVE_ADDRESS           (0x50)
 #define I2C_SPEED_MODE              I2C_SPEED_FAST
 #define I2C_ADDRESS_MODE            I2C_ADDRESSING_7B
-#define I2C_ADDRESS_SIZE            I2C_2BYTES_ADDR
+#define I2C_ADDRESS_SIZE            I2C_2BYTES_ADDR*/
 
 
 /****************************************************************************************/
@@ -161,17 +181,7 @@
 /****************************************************************************************/
 #define USE_BAT_LEVEL_ALERT         0
 
-#if defined (__DA14531__)
-    #define GPIO_ALERT_LED_PORT     GPIO_PORT_0
-    #define GPIO_ALERT_LED_PIN      GPIO_PIN_9
-    #define GPIO_BAT_LED_PORT       GPIO_PORT_0
-    #define GPIO_BAT_LED_PIN        GPIO_PIN_8
-#else
-    #define GPIO_ALERT_LED_PORT     GPIO_PORT_1
-    #define GPIO_ALERT_LED_PIN      GPIO_PIN_0
-    #define GPIO_BAT_LED_PORT       GPIO_PORT_1
-    #define GPIO_BAT_LED_PIN        GPIO_PIN_2
-#endif
+
 
 /***************************************************************************************/
 /* Production debug output configuration                                               */
