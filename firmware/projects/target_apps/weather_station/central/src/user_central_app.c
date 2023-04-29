@@ -84,6 +84,7 @@ typedef struct
 }central_app_env_t;
 
 central_app_env_t central_app_env;
+void read_temp();
 
 /*
  * FUNCTION DEFINITIONS
@@ -91,17 +92,13 @@ central_app_env_t central_app_env;
 */
 
 
-static void configure_alert_button(void);
-
-
-#if (SCAN_FILTER == (SCAN_FILTER_NAME) || SCAN_FILTER == SCAN_FILTER_NONE) 
 static inline void format_adv_string(uint8_t * data, uint8_t len, char *out_string)
 {
 	memcpy(out_string, data, len);
 	out_string[len] = '\0';
 	
 }
-#endif
+
 /* return true if UUIDs match */
 static bool match_uuid(uint8_t * uuid1, uint8_t *uuid2, uint8_t len)
 {
@@ -190,64 +187,31 @@ static const char *format_properties(uint8_t properties)
 }
 
 
+void main_routine(){
+		// read temperature from peripheral
+		read_temp();
+		// Turn on power switch
+		GPIO_SetActive(PWR_SW_PORT, PWR_SW_PIN);
+		// Measure temperature, humidity, pressure, and gas
+	
+		// Update display with all new values
+		
+	// Turn off power switch
+		GPIO_SetInactive(PWR_SW_PORT, PWR_SW_PIN);
+		// Go to sleep
+}
 /**
  ****************************************************************************************
  * @brief callback from alert button
  * @return void
  ****************************************************************************************
  */
-static void app_button_press_cb()
+void read_temp()
 {
-	uint8_t i;
-	for(i = 0; i < CFG_MAX_CONNECTIONS ; i++)
-	{
-		/*central_app_env.periph_devices[i].serv_disc.ias_alert_counter++;
-		if(central_app_env.periph_devices[i].con_valid){
-			if(central_app_env.periph_devices[i].serv_disc.ias_alert_counter > 1)
-			{
-				central_app_env.periph_devices[i].serv_disc.ias_alert_counter = 0;
-			}else
-			{
-				central_app_env.periph_devices[i].serv_disc.ias_alert_counter++;
-			}
-			uint8_t val = 1;
-
-			user_ble_gatt_write(GATTC_WRITE_NO_RESPONSE,
-														central_app_env.periph_devices[i].con_idx, 
-														0x001c, 
-														&val, 
-														sizeof(uint8_t));*/
-			
-			user_gatt_read_simple(central_app_env.periph_devices[i].con_idx, 0x000c);
-		
-			printf("Button pressed\n");
-		}
-
-	configure_alert_button();
-		
+	user_gatt_read_simple(central_app_env.periph_devices[0].con_idx, central_app_env.periph_devices[0].serv_disc.temp_char.handle);
+	printf("Trying to read temperature\n");		
 }
-	
-	
-
-
-/**
- ****************************************************************************************
- * @brief configure alert button
- * @return void
- ****************************************************************************************
- */
-static void configure_alert_button()
-{
-	wkupct_register_callback(app_button_press_cb);
-
-
-	wkupct_enable_irq(WKUPCT_PIN_SELECT(GPIO_BUTTON_PORT, GPIO_BUTTON_PIN), // select pin (GPIO_BUTTON_PORT, GPIO_BUTTON_PIN)
-										WKUPCT_PIN_POLARITY(GPIO_BUTTON_PORT, GPIO_BUTTON_PIN, WKUPCT_PIN_POLARITY_LOW), // polarity low
-										1, // 1 event
-										0x3F); // debouncing time = 63
-
-	
-}
+		
 
 
 /**
@@ -259,20 +223,9 @@ static void configure_alert_button()
  */
 static void handle_service_disc_finished(uint8_t con_idx)
 {
-/*#ifdef ENABLE_BAS
-	if(central_app_env.periph_devices[con_idx].serv_disc.bas_handle_valid){
-		user_gatt_read_simple(con_idx, 
-						central_app_env.periph_devices[con_idx].serv_disc.bas_char.c.value_handle);
-	}
-#endif*/ 
-	configure_alert_button();
-#ifdef ENABLE_IAS
-	/*if(central_app_env.periph_devices[con_idx].serv_disc.ias_handle_valid){
-			configure_alert_button();
-	}*/
-	configure_alert_button();
-	
-#endif 
+	// start main routine
+	main_routine();
+	//app_button_press_cb();
 	
 }
 
@@ -574,26 +527,24 @@ static void handle_svc_ind(uint8_t con_idx, struct gattc_sdp_svc_ind const *disc
 #endif 
 	
 #ifdef ENABLE_BAS
-	bool bas_uuid_match = false;
-	uint16_t bas_uuid = ATT_UUID_16(0x181A);
-	uint16_t bas_level_uuid= ATT_UUID_16(0x2A6E);
+	bool temp_uuid_match = false;
+	uint16_t env_uuid = ATT_UUID_16(0x181A);
+	uint16_t temp_uuid= ATT_UUID_16(0x2A1C);
 	printf("UUID: %x\n", svc->svc_uuid.uuid.uuid16);
 	
 	if(svc->svc_uuid.type == ATT_UUID_16){
-		bas_uuid_match = match_uuid((uint8_t *)&bas_uuid, (uint8_t *)&svc->svc_uuid.uuid.uuid16, sizeof(uint16_t));
+		temp_uuid_match = match_uuid((uint8_t *)&env_uuid, (uint8_t *)&svc->svc_uuid.uuid.uuid16, sizeof(uint16_t));
 	}
-	if(bas_uuid_match){
-		printf("Battery Service: ");
-	}
+
 #endif
 	printf("%s: \r\n", format_uuid(&svc->svc_uuid) );
 	for(i = 0 ; i<svc->num_chars; i++)
 	{
 		gattc_chars_t *gatt_char = &svc->items[i];
 
-		if(bas_uuid_match == 1)
+		if(temp_uuid_match == 1)
 		{
-			if(match_uuid( (uint8_t *)&bas_level_uuid , (uint8_t *)&gatt_char->uuid.uuid, 2) )
+			if(match_uuid( (uint8_t *)&temp_uuid , (uint8_t *)&gatt_char->uuid.uuid, 2) )
 			{
 				memcpy(&central_app_env.periph_devices[con_idx].serv_disc.temp_char, 
 																										gatt_char, sizeof(gattc_chars_t));
@@ -678,7 +629,8 @@ void user_catch_rest_hndl(ke_msg_id_t const msgid,
 #ifdef ENABLE_BAS
 			if(ind->handle == central_app_env.periph_devices[conn_idx].serv_disc.bas_char.c.value_handle)
 			{
-				printf("Battery Level Changed: %d \r\n", ind->value[0]);			
+				printf("Battery Level Changed: %d \r\n", ind->value[0]);		
+				printf("Battery Level Changed: %d \r\n", ind->value[1]);
 			}
 #endif		
 		}break;
@@ -705,22 +657,10 @@ void user_catch_rest_hndl(ke_msg_id_t const msgid,
 		case GATTC_READ_IND:
 		{
 			struct gattc_read_ind const *ind = (struct gattc_read_ind const*)param;
-#ifdef ENABLE_BAS
-			if(ind->handle == central_app_env.periph_devices[conn_idx].serv_disc.bas_char.c.value_handle)
+			if(ind->handle == central_app_env.periph_devices[conn_idx].serv_disc.temp_char.handle)
 			{
-				printf("Battery Level Read: %d \r\n", ind->value[0]);
-			}
-			else if(ind->handle == 0x0048){
-				printf("Counter value read: %d\n", ind->value[0]);
-			}
-			else
-#endif 
-			{
-				printf("GATTC_READ_IND: handle: %04x\r\n", ind->handle);
-				for(int i = 0; i < 50; i++){
-					printf("%d", ind->value[0]);
-				}
-				printf("\n");
+				printf("Temperature Read: %d \r\n", ind->value[0]);
+				printf("Temperature Read: %d \r\n", ind->value[1]);
 			}
 		}break;
 		//case 3084:

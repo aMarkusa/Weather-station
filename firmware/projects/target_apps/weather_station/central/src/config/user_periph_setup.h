@@ -57,8 +57,8 @@
     #define UART2_TX_PORT           GPIO_PORT_0
     #define UART2_TX_PIN            GPIO_PIN_6
 		
-    #define GPIO_BUTTON_PORT	    GPIO_PORT_0
-    #define GPIO_BUTTON_PIN	    GPIO_PIN_8
+    #define PWR_SW_PORT	    GPIO_PORT_0
+    #define PWR_SW_PIN	    GPIO_PIN_5
 
 #else
     #define UART2_TX_PORT           GPIO_PORT_0

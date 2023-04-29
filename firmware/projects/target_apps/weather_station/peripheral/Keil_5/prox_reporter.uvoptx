@@ -473,9 +473,25 @@
         <Bp>
           <Number>0</Number>
           <Type>0</Type>
+          <LineNumber>75</LineNumber>
+          <EnabledFlag>1</EnabledFlag>
+          <Address>133971878</Address>
+          <ByteObject>0</ByteObject>
+          <HtxType>0</HtxType>
+          <ManyObjects>0</ManyObjects>
+          <SizeOfObject>0</SizeOfObject>
+          <BreakByAccess>0</BreakByAccess>
+          <BreakIfRCount>1</BreakIfRCount>
+          <Filename>.\user_peripheral.c</Filename>
+          <ExecCommand></ExecCommand>
+          <Expression>\\periheral_531\user_peripheral.c\75</Expression>
+        </Bp>
+        <Bp>
+          <Number>1</Number>
+          <Type>0</Type>
           <LineNumber>74</LineNumber>
           <EnabledFlag>1</EnabledFlag>
-          <Address>133971822</Address>
+          <Address>133971864</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
@@ -485,6 +501,22 @@
           <Filename>.\user_peripheral.c</Filename>
           <ExecCommand></ExecCommand>
           <Expression>\\periheral_531\user_peripheral.c\74</Expression>
+        </Bp>
+        <Bp>
+          <Number>2</Number>
+          <Type>0</Type>
+          <LineNumber>81</LineNumber>
+          <EnabledFlag>1</EnabledFlag>
+          <Address>133971876</Address>
+          <ByteObject>0</ByteObject>
+          <HtxType>0</HtxType>
+          <ManyObjects>0</ManyObjects>
+          <SizeOfObject>0</SizeOfObject>
+          <BreakByAccess>0</BreakByAccess>
+          <BreakIfRCount>1</BreakIfRCount>
+          <Filename>.\user_peripheral.c</Filename>
+          <ExecCommand></ExecCommand>
+          <Expression>\\periheral_531\user_peripheral.c\81</Expression>
         </Bp>
       </Breakpoint>
       <ScvdPack>
@@ -1031,7 +1063,7 @@
 
   <Group>
     <GroupName>sdk_ble</GroupName>
-    <tvExp>0</tvExp>
+    <tvExp>1</tvExp>
     <tvExpOptDlg>0</tvExpOptDlg>
     <cbSel>0</cbSel>
     <RteFlg>0</RteFlg>

@@ -1,4 +1,4 @@
-;#<FEEDBACK># ARM Linker, 5060960: Last Updated: Sun Mar 19 20:41:41 2023
+;#<FEEDBACK># ARM Linker, 5060960: Last Updated: Sat Apr 29 20:42:54 2023
 ;VERSION 0.2
 ;FILE adc_531.o
 adc_correct_sample <= USED 0
@@ -286,3 +286,5 @@ wkupct2_disable_irq <= USED 0
 wkupct2_enable_irq <= USED 0
 wkupct2_register_callback <= USED 0
 wkupct_disable_irq <= USED 0
+wkupct_enable_irq <= USED 0
+wkupct_register_callback <= USED 0

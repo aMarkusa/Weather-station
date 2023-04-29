@@ -71,9 +71,13 @@ static void put_system_into_deep_sleep(void);
 
 void user_app_on_disconnect(struct gapc_disconnect_ind const *param)
 {
-		printf("Disconnect reason: %d", param->reason);
-    default_app_on_disconnect(NULL);
-		put_system_into_deep_sleep();
+		if(param->reason == 0x13){
+			printf("Connection terminated by central\n");
+			put_system_into_deep_sleep();
+		}
+		else{
+			default_app_on_disconnect(NULL);
+		}
 }
 
 void user_app_on_connection(uint8_t conidx, struct gapc_connection_req_ind const *param)
@@ -177,7 +181,13 @@ static void configure_rtc_wakeup(void)
 */
 static void put_system_into_deep_sleep(void)
 {
+		// Ensure PD_TIM is open
+		SetBits16(PMU_CTRL_REG, TIM_SLEEP, 0);
+		// Wait until PD_TIM is opened
+		while ((GetWord16(SYS_STAT_REG) & TIM_IS_UP) != TIM_IS_UP);
+		
 		spi_flash_power_down();
+
 #ifdef TESTING_MODE 
     configure_rtc_wakeup();
 #endif
@@ -196,30 +206,13 @@ void app_advertise_complete(const uint8_t status)
 {
     if ((status == GAP_ERR_NO_ERROR) || (status == GAP_ERR_CANCELED))
     {
-
 			// restart adv
+			default_app_on_disconnect(NULL);
     }
 
     if (status == GAP_ERR_CANCELED)
     {
-
-#if defined (__DA14531__)
-    // Configure PD_TIM
-#if defined (CFG_EXT_SLEEP_WAKEUP_RTC) || defined (CFG_EXT_SLEEP_WAKEUP_TIMER1) || \
-    defined (CFG_DEEP_SLEEP_WAKEUP_RTC) || defined (CFG_DEEP_SLEEP_WAKEUP_TIMER1)
-        // Ensure PD_TIM is open
-        SetBits16(PMU_CTRL_REG, TIM_SLEEP, 0);
-        // Wait until PD_TIM is opened
-        while ((GetWord16(SYS_STAT_REG) & TIM_IS_UP) != TIM_IS_UP);
-#else
-        // Close PD_TIM
-        SetBits16(PMU_CTRL_REG, TIM_SLEEP, 1);
-        // Wait until PD_TIM is closed
-        while ((GetWord16(SYS_STAT_REG) & TIM_IS_DOWN) != TIM_IS_DOWN);
-#endif
-#endif
         put_system_into_deep_sleep();
-
 		}
 
 }
