@@ -1,1 +1,11 @@
 /display
+.gitignore
+/firmware/binaries
+/firmware/config
+/firmware/doc
+/firmware/sdk
+/firmware/third_party
+/firmware/utilities
+*.map
+*.lst
+*.bin
