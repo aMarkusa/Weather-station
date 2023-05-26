@@ -1,7 +1,7 @@
-"ID";"Beteckning";"Paket";"Kvantitet";"Beteckning";"Leverantör och ref";
-1;"R1,R2";"R_0603_1608Metric_Pad0.98x0.95mm_HandSolder";2;"4k7";;;
-2;"C1,C2";"C_0603_1608Metric_Pad1.08x0.95mm_HandSolder";2;"100n";;;
-3;"U2";"STS4X";1;"STS40-CD1B-R3";;;
-4;"U1";"XCVR_DA14531MOD-00F01002";1;"DA14531MOD-00F01002";;;
-5;"J1";"PinHeader_1x04_P2.54mm_Vertical";1;"PROG";;;
-6;"J2";"KEYSTONE_1052TR";1;"1052TR";;;
+"Id","Designator","Package","Quantity","Designation","Supplier and ref",
+1,"R1,R2","R_0603_1608Metric_Pad0.98x0.95mm_HandSolder",2,"4k7",,,
+2,"C1,C2","C_0603_1608Metric_Pad1.08x0.95mm_HandSolder",2,"100n",,,
+3,"U2","STS4X",1,"STS40-CD1B-R3",,,
+4,"U1","XCVR_DA14531MOD-00F01002",1,"DA14531MOD-00F01002",,,
+5,"J1","PinHeader_1x04_P2.54mm_Vertical",1,"PROG",,,
+6,"J2","KEYSTONE_1052TR",1,"1052TR",,,
