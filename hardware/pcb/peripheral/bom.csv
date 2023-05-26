@@ -1,4 +1,4 @@
-"Id","Designator","Package","Quantity","Designation","Supplier and ref",
+"Id","Designator","Package","Quantity","Designation","Supplier and ref"
 1,"R1,R2","R_0603_1608Metric_Pad0.98x0.95mm_HandSolder",2,"4k7",
 2,"C1,C2","C_0603_1608Metric_Pad1.08x0.95mm_HandSolder",2,"100n",
 3,"U2","STS4X",1,"STS40-CD1B-R3",
