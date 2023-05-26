@@ -1,0 +1,11 @@
+FILE_TYPE = MULTI_PHYS_TABLE;
+
+PART 'RSR025N03FRATL'
+CLASS = DISCRETE
+{========================================================================================}
+:"MANUFACTURER_NAME", "MANUFACTURER_PART_NUMBER"= "PART_NUMBER", "JEDEC_TYPE", "PACK_TYPE", "MOUSER_PART_NUMBER", "MOUSER_PRICE/STOCK", "ARROW_PART_NUMBER", "ARROW_PRICE/STOCK", "MOUSER_TESTING_PART_NUMBER", "MOUSER_TESTING_PRICE/STOCK", "DESCRIPTION", "DATASHEET", "HEIGHT";
+{========================================================================================}
+ "ROHM Semiconductor", "RSR025N03FRATL" (!) = "", "SOT95P280X100-3N", "SOT23 (3-Pin)", "", "", "", "", "", "", "ROHM - RSR025N03FRATL - Power MOSFET, N Channel, 30 V, 2.5 A, 0.05 ohm, TSMT, Surface Mount", "https://componentsearchengine.com/Datasheets/2/RSR025N03FRATL.pdf", "1 mm"
+END_PART
+
+END.

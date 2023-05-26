@@ -1,0 +1,20 @@
+.RSR025N03FRATL :1 ;ROHM - RSR025N03FRATL - Power MOSFET, N Channel, 30 V, 2.5 A, 0.05 ohm, TSMT, Surface Mount
+SOT95P280X100-3N
+*STM Q
+*NGS
+*PLB 1="G" 2="S" 3="D"
+*MXP 3
+*DFN RSR025N03FRATL
+~!Manufacturer_Name (ROHM Semiconductor)
+~!Manufacturer_Part_Number (RSR025N03FRATL)
+~!Mouser Part Number (-)
+~!Mouser Price/Stock (-)
+~!Arrow Part Number (-)
+~!Arrow Price/Stock (-)
+~!Mouser Testing Part Number (-)
+~!Mouser Testing Price/Stock (-)
+~!Link Datasheet (https://componentsearchengine.com/Datasheets/2/RSR025N03FRATL.pdf)
+~!Height (1mm)
+~!3D_Model (RSR025N03FRATL)
+RSR025N03FRATL
+1.1!U 2.1!U 3.1!U 

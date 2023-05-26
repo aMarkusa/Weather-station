@@ -1,0 +1,9 @@
+EESchema-DOCLIB  Version 2.0
+#
+$CMP RSR025N03FRATL
+D ROHM - RSR025N03FRATL - Power MOSFET, N Channel, 30 V, 2.5 A, 0.05 ohm, TSMT, Surface Mount
+K
+F https://componentsearchengine.com/Datasheets/2/RSR025N03FRATL.pdf
+$ENDCMP
+#
+#End Doc Library
