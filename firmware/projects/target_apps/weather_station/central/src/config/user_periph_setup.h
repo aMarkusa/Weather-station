@@ -48,6 +48,23 @@
  ****************************************************************************************
  */
 
+/****************************************************************************************/
+/* I2C config																																		        */
+/****************************************************************************************/
+
+// BME680
+#define BME_I2C_SCL_PORT                GPIO_PORT_0
+#define BME_I2C_SCL_PIN                 GPIO_PIN_8
+
+#define BME_I2C_SDA_PORT                GPIO_PORT_0
+#define BME_I2C_SDA_PIN                 GPIO_PIN_9
+
+// Define I2C Configuration
+#define BME_I2C_SLAVE_ADDRESS           (0x76)
+#define BME_I2C_SPEED_MODE              I2C_SPEED_STANDARD
+#define BME_I2C_ADDRESS_MODE            I2C_ADDRESSING_7B
+
+
 
 /****************************************************************************************/
 /* UART2 configuration to use with arch_console print messages                          */

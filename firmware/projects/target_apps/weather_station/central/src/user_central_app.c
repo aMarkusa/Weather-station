@@ -56,7 +56,8 @@
 #include "wkupct_quadec.h"
 #include "user_periph_setup.h"
 #include "spi_flash.h"
-#include "EventRecorder.h"
+//#include "EventRecorder.h"
+#include "bme680_task.h"
 
 
 #define SCAN_INTVL_MS		(50)
@@ -84,7 +85,7 @@ typedef struct
 }central_app_env_t;
 
 central_app_env_t central_app_env;
-void read_temp();
+void read_temp(void);
 
 /*
  * FUNCTION DEFINITIONS
@@ -192,8 +193,11 @@ void main_routine(){
 		read_temp();
 		// Turn on power switch
 		GPIO_SetActive(PWR_SW_PORT, PWR_SW_PIN);
+		delay_usec(500000, NULL);
 		// Measure temperature, humidity, pressure, and gas
-	
+		int8_t result = main_task();
+		printf("Result: %d\n", result);
+
 		// Update display with all new values
 		
 	// Turn off power switch
@@ -388,7 +392,6 @@ void user_on_adv_report_ind(struct gapm_adv_report_ind const * adv_ind)
  */
 void user_on_connection(uint8_t connection_idx, struct gapc_connection_req_ind const *param)
 {
-		EventRecorderInitialize(EventRecordAll, 1);
 		if(central_app_env.connection_timer != EASY_TIMER_INVALID_TIMER){
 			app_easy_timer_cancel(central_app_env.connection_timer);
 		}
@@ -492,6 +495,8 @@ void user_on_scanning_completed(uint8_t reason)
  */
 void user_app_on_set_dev_config_complete(void)
 {
+		//EventRecorderInitialize(EventRecordAll, 1);
+		main_routine();
 		/*Advertising starts within this default handler, but we have made the callback NULL to avoid advertising. 
 		* alternate method, would be to copy the default handler code into here, removing the advertising call
 		*/

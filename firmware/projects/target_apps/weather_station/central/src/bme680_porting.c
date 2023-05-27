@@ -6,10 +6,10 @@
 // read from BME680
 int8_t i2c_read(uint8_t reg_addr, uint8_t *reg_data_ptr, uint32_t data_len, void* intf_ptr){
 	i2c_abort_t abrt_code;
-	
+	uint8_t write_mode_reg = 0xEC;
 	// enter bme680 Read-mode
 	i2c_master_transmit_buffer_sync(&reg_addr, 1, &abrt_code, I2C_F_ADD_STOP);
-	delay_usec(100000, NULL);
+	//delay_usec(100000, NULL);
 	// read register
 	i2c_master_receive_buffer_sync(reg_data_ptr, data_len, &abrt_code, I2C_F_ADD_STOP);
 	
@@ -26,6 +26,9 @@ int8_t i2c_read(uint8_t reg_addr, uint8_t *reg_data_ptr, uint32_t data_len, void
 // write to BME680
 int8_t i2c_write(uint8_t reg_addr, uint8_t *reg_data_ptr, uint32_t data_len, void* intf_ptr){
 	i2c_abort_t abrt_code;
+	//uint8_t write_mode_reg = 0xEC;
+	i2c_master_transmit_buffer_sync(&reg_addr, 1, &abrt_code, I2C_F_NONE);
+	//delay_usec(100000, NULL);
 	i2c_master_transmit_buffer_sync(reg_data_ptr, data_len, &abrt_code, I2C_F_ADD_STOP);
 	
 	if (abrt_code == I2C_ABORT_NONE){
@@ -39,17 +42,6 @@ int8_t i2c_write(uint8_t reg_addr, uint8_t *reg_data_ptr, uint32_t data_len, voi
 // get timestampt in us
 int64_t get_timestamp_us(){
 	return 0;
-}
-
-// sensor output
-void output_ready(int64_t timestamp, float iaq, uint8_t iaq_accuracy, float temperature, float humidity,
-     float pressure, float raw_temperature, float raw_humidity, float gas, bsec_library_return_t bsec_status,
-     float static_iaq, float co2_equivalent, float breath_voc_equivalent){
-			 
-	  printf("timestamp=%lld, iaq=%f, iaq_accuracy=%d, temperature=%f, humity=%f, pressure=%f, \
-		raw_temperature=%f, raw_humity=%f, gas=%f, bsec_status=%d, static_iaq=%f, co2_equivalent=%f, \
-		breath_voc_equivalent=%f\r\n", timestamp, iaq, iaq_accuracy, temperature, humidity, pressure, \
-		raw_temperature, raw_humidity, gas, bsec_status, static_iaq, co2_equivalent, breath_voc_equivalent);
 }
 
 		 

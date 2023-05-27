@@ -4,7 +4,12 @@
 #include "bme68x.h"
 #include "bme68x_defs.h"
 #include "bme680_porting.h"
+#include <stdbool.h>
 
 int8_t main_task(void);
+
+uint32_t begin_reading(void);
+
+bool perform_reading(void);
 
 #endif

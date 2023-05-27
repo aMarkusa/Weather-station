@@ -43,6 +43,7 @@
 #include "uart.h"
 #include "spi_flash.h"
 #include "syscntl.h"
+#include "i2c.h"
 
 /*
  * GLOBAL VARIABLE DEFINITIONS
@@ -65,9 +66,13 @@ void GPIO_reservations(void)
 	RESERVE_GPIO(BUTTON, PWR_SW_PORT, PWR_SW_PIN, PID_GPIO);
 	//reserve SPI pins
 	RESERVE_GPIO(en,SPI_EN_PORT, SPI_EN_PIN, PID_SPI_EN);  
-        RESERVE_GPIO(clk,SPI_CLK_PORT, SPI_CLK_PIN, PID_SPI_CLK); 
-        RESERVE_GPIO(d,SPI_DO_PORT, SPI_DO_PIN, PID_SPI_DO); 
-        RESERVE_GPIO(di,SPI_DI_PORT, SPI_DI_PIN, PID_SPI_DI); 
+  RESERVE_GPIO(clk,SPI_CLK_PORT, SPI_CLK_PIN, PID_SPI_CLK); 
+  RESERVE_GPIO(d,SPI_DO_PORT, SPI_DO_PIN, PID_SPI_DO); 
+  RESERVE_GPIO(di,SPI_DI_PORT, SPI_DI_PIN, PID_SPI_DI); 
+	
+	// reserve BME680 pins
+  RESERVE_GPIO(I2C_SCL, BME_I2C_SCL_PORT, BME_I2C_SCL_PIN, PID_I2C_SCL);
+  RESERVE_GPIO(I2C_SDA, BME_I2C_SDA_PORT, BME_I2C_SDA_PIN, PID_I2C_SDA);
 }
 
 #endif
@@ -99,6 +104,9 @@ void set_pad_functions(void)
     GPIO_ConfigurePin(SPI_DI_PORT, SPI_DI_PIN, INPUT, PID_SPI_DI, false);               
 #endif		
 
+// BME680
+		GPIO_ConfigurePin(BME_I2C_SCL_PORT, BME_I2C_SCL_PIN, INPUT_PULLUP, PID_I2C_SCL, false);
+    GPIO_ConfigurePin(BME_I2C_SDA_PORT, BME_I2C_SDA_PIN, INPUT_PULLUP, PID_I2C_SDA, false);
 }
 
 #if defined (CFG_PRINTF_UART2)
@@ -133,6 +141,21 @@ static const spi_cfg_t spi_cfg = {
 #endif
 };
 
+// BME680 i2c cfg
+static const i2c_cfg_t bme_i2c_cfg = {
+    .clock_cfg.ss_hcnt = I2C_SS_SCL_HCNT_REG_RESET,
+    .clock_cfg.ss_lcnt = I2C_SS_SCL_LCNT_REG_RESET,
+    .clock_cfg.fs_hcnt = I2C_FS_SCL_HCNT_REG_RESET,
+    .clock_cfg.fs_lcnt = I2C_FS_SCL_LCNT_REG_RESET,
+    .restart_en = I2C_RESTART_ENABLE,
+    .speed = BME_I2C_SPEED_MODE,
+    .mode = I2C_MODE_MASTER,
+    .addr_mode = BME_I2C_ADDRESS_MODE,
+    .address = BME_I2C_SLAVE_ADDRESS,
+    .tx_fifo_level = 16,
+    .rx_fifo_level = 16,
+};
+
 static const spi_flash_cfg_t spi_flash_cfg = {
     .chip_size = SPI_FLASH_DEV_SIZE,
 };
@@ -141,6 +164,8 @@ static const spi_flash_cfg_t spi_flash_cfg = {
 
 void periph_init(void)
 {
+	// init BME680 i2c
+		i2c_init(&bme_i2c_cfg);
 #if defined (__DA14531__)
     // In Boost mode enable the DCDC converter to supply VBAT_HIGH for the used GPIOs
     syscntl_dcdc_turn_on_in_boost(SYSCNTL_DCDC_LEVEL_3V0);
