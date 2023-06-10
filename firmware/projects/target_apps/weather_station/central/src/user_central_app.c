@@ -189,16 +189,22 @@ static const char *format_properties(uint8_t properties)
 
 
 void main_routine(){
+		float sensor_data[4];
+		
 		// read temperature from peripheral
 		read_temp();
 		// Turn on power switch
 		GPIO_SetActive(PWR_SW_PORT, PWR_SW_PIN);
 		delay_usec(500000, NULL);
 		// Measure temperature, humidity, pressure, and gas
-		int8_t result = main_task();
-		printf("Result: %d\n", result);
+		uint8_t result = read_sensor(sensor_data);
+		if(result == 0){
+			// Update display with all new values
+		}
+		else{
+			//
+		}
 
-		// Update display with all new values
 		
 	// Turn off power switch
 		GPIO_SetInactive(PWR_SW_PORT, PWR_SW_PIN);
