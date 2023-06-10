@@ -6,6 +6,7 @@
 /firmware/sdk
 /firmware/third_party
 /firmware/utilities
+/firmware/projects/target_apps/weather_station/central/assets
 *.map
 *.lst
 *.bin
