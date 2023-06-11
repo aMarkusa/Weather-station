@@ -7,7 +7,6 @@
 /firmware/third_party
 /firmware/utilities
 /firmware/projects/target_apps/weather_station/central/assets
-/firmware/projects/target_apps/weather_station/central/project_environment
 *.map
 *.lst
 *.bin
