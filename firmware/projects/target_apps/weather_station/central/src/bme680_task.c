@@ -7,26 +7,39 @@ struct bme68x_heatr_conf sensor_heatr_conf;
 struct bme68x_data data;
 
 
-int8_t perform_reading(){
+uint32_t begin_reading(){
+  /* Calculate delay period in microseconds */
+  uint32_t delayus_period = (uint32_t)bme68x_get_meas_dur(BME68X_FORCED_MODE, &sensor_conf, &sensor) +
+                            ((uint32_t)sensor_heatr_conf.heatr_dur * 1000);
+
+	return delayus_period;
+}
+
+bool perform_reading(){
 	uint8_t n_fields;
 	
 	int8_t rslt = bme68x_set_op_mode(BME68X_FORCED_MODE, &sensor);
-	uint32_t reading_duration = (uint32_t)bme68x_get_meas_dur(BME68X_FORCED_MODE, &sensor_conf, &sensor) +
-                            ((uint32_t)sensor_heatr_conf.heatr_dur * 1000);
-	
+	uint32_t reading_duration = begin_reading();
 	if(reading_duration == 0){
 		return false;
 	}
 	// wait for reading_duration to end
 	delay_usec(reading_duration, NULL);
 	
-	// fetch the measured data
+	// get reading data
+	//uint8_t test;
+	//i2c_read(0x22, &test, 1, NULL);
+	//i2c_read(0x23, &test, 1, NULL);
 	rslt = bme68x_get_data(BME68X_FORCED_MODE, &data, &n_fields, &sensor);
-	
-	return rslt;
+	if(rslt != BME68X_OK){
+		return false;
+	}
+	else{
+		return true;
+	}
 }
 
-uint8_t read_sensor(float sensor_data[4]){	
+int8_t main_task(){	
 	sensor.chip_id = 0x61;
   sensor.intf = BME68X_I2C_INTF;
   sensor.intf_ptr = NULL;
@@ -38,7 +51,8 @@ uint8_t read_sensor(float sensor_data[4]){
 	if(bme68x_init(&sensor) != 0){
 		return 1;
 	}
-
+	
+	
 	sensor_conf.os_temp = BME68X_OS_2X;
 	sensor_conf.os_hum = BME68X_OS_16X;
 	sensor_conf.os_pres = BME68X_OS_1X;
@@ -48,7 +62,6 @@ uint8_t read_sensor(float sensor_data[4]){
 	if(rslt != BME68X_OK){
 		return 1;
 	}
-
 	sensor_heatr_conf.enable = BME68X_ENABLE;
 	sensor_heatr_conf.heatr_temp = 300;
 	sensor_heatr_conf.heatr_dur = 100;
@@ -58,15 +71,14 @@ uint8_t read_sensor(float sensor_data[4]){
 	}
 	
 	if(!perform_reading()){
-		sensor_data[0] = data.temperature;
-		sensor_data[1] = data.pressure;
-		sensor_data[2] = data.humidity;
-		sensor_data[3] = data.gas_resistance;
-		
-		return 0;
+		return 1;
 	}
 	
 	else{
+		/*printf("Temperature: %f\n", data.temperature);
+		printf("Humidity: %f\n", data.humidity);
+		printf("Pressure: %f\n", data.pressure);
+		*/
 		return 0;
 	}
 			

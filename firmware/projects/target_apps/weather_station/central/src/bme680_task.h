@@ -6,10 +6,10 @@
 #include "bme680_porting.h"
 #include <stdbool.h>
 
-uint8_t read_sensor(float sensor_data[4]);
+int8_t main_task(void);
 
 uint32_t begin_reading(void);
 
-int8_t perform_reading(void);
+bool perform_reading(void);
 
 #endif
