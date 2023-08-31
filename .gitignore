@@ -1,12 +1,9 @@
-/display
+BME680/*
+old_firmware/*
+hardware/*
+SDK_6.0.16.1144/*
 .gitignore
-/firmware/binaries
-/firmware/config
-/firmware/doc
-/firmware/sdk
-/firmware/third_party
-/firmware/utilities
-/firmware/projects/target_apps/weather_station/central/assets
+firmware/weather_central/custom_profile/*
 *.map
 *.lst
 *.bin
