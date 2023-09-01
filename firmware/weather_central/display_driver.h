@@ -3,7 +3,24 @@
 
 #include <stdint.h>
 
+#define SCREEN_WIDTH                400
+#define SCREEN_HEIGHT               300
+#define FONT_SIZE            				2
+#define CHAR_WIDTH                  8 
+#define CHAR_HEIGHT                 8
+#define BYTESPERROW                 (SCREEN_WIDTH / 8) 
+#define BYTESPERCHARROW             (BYTESPERROW * 8) 
+#define CHARSPERROW                 (SCREEN_WIDTH / CHAR_WIDTH)
+#define ROWSPERCOLUMN               (SCREEN_HEIGHT / CHAR_HEIGHT)
+#define LEFTEDGEBYTE              	2
+
+#define FONT_ARRAY_LEN          		22
+
 uint8_t reverse(uint8_t b);
+
+uint8_t get_font_index(char* letter);
+
+uint8_t* scale_byte(uint8_t byte);
 
 void display_init(void);
 

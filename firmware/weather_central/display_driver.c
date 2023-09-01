@@ -4,7 +4,6 @@
 #include "systick.h"
 #include "io_expander.h"
 #include <stdio.h>
-#include "graphics_library.h"
 
 char font[FONT_ARRAY_LEN][CHAR_HEIGHT] = {
     { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 },   // U+0020 (space)
@@ -49,11 +48,17 @@ static const spi_cfg_t spi_cfg = {
   #endif
 };
 
-uint8_t reverse(uint8_t b) {
-   b = (b & 0xF0) >> 4 | (b & 0x0F) << 4;
-   b = (b & 0xCC) >> 2 | (b & 0x33) << 2;
-   b = (b & 0xAA) >> 1 | (b & 0x55) << 1;
-   return b;
+uint8_t get_font_index(char* letter){
+    char* mapping = " %.0123456789:CINOPTUa";
+    uint8_t i = 0;
+    while (*mapping != '\0') {
+        if (*letter == *mapping) {
+            return i % FONT_ARRAY_LEN; // Mapping to the range 0-21
+        }
+        mapping++;
+        i++;
+    }   
+		return FONT_ARRAY_LEN + 1; // Not found
 }
 
 void display_send_index(uint8_t index){
@@ -105,23 +110,21 @@ void display_config(){
 	display_send_data(0x89);
 }
 
-uint8_t* get_bytes(uint8_t byte){
+uint8_t* scale_byte(uint8_t byte){
     static uint8_t bytes[FONT_SIZE];
-
-    //printf("Old byte: %02x\n", byte);
 
     for (uint8_t i = 0; i < FONT_SIZE; i++){
         uint8_t new_byte = 0;
         for (uint8_t j = 0; j < 8/FONT_SIZE; j++){
-            uint8_t bit = (uint8_t)(byte & 0x01) << (j*FONT_SIZE);
+            uint8_t bit = (uint8_t)(byte & 0x80) >> (j*FONT_SIZE);
             for (uint8_t k = 0; k < FONT_SIZE; k++){
                 new_byte = new_byte | bit;
-                bit = bit << 1;
+                bit = bit >> 1;
             }
-            byte = byte >> 1;
+            byte = byte << 1;
         }
-        //printf("New byte: %02x\n", new_byte);
-        bytes[(FONT_SIZE - 1) - i] = new_byte;
+				
+        bytes[i] = new_byte;
     }
     
     return bytes;
@@ -137,9 +140,9 @@ void draw_string(char* string, uint8_t len){
 			for (uint8_t k = 0; k < BYTESPERROW; k++) {
 				if (k >= LEFTEDGEBYTE && *string != '\0') {
 					if (byte == 0){
-						char_index = custom_hash(string);
+						char_index = get_font_index(string);
 						data = font[char_index][i];
-						bytes = get_bytes(data);
+						bytes = scale_byte(data);
 					}
   					display_send_data(bytes[byte]);
 					byte++;
@@ -159,15 +162,15 @@ void draw_string(char* string, uint8_t len){
 
 void display_send_image(){
 	display_send_index(0x10);
-	char* string = "1 2 3 4 5";
+	char* string = "IN: 23.5 C";
 	draw_empty_row(10);
-	draw_string(string, 9);
+	draw_string(string, strlen(string));
 	draw_empty_row(10);
-	draw_string(string, 9);
+	draw_string(string, strlen(string));
 	draw_empty_row(10);
-	draw_string(string, 9);
+	draw_string(string, strlen(string));
 	draw_empty_row(4);
-	draw_string(string, 9);
+	draw_string(string, strlen(string));
 	
 	for (uint8_t i = 1; i <= 200; i++){
 		display_send_data(0x00);
