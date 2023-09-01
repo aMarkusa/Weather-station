@@ -28,7 +28,7 @@ char font[FONT_ARRAY_LEN][CHAR_HEIGHT] = {
 		{ 0xfc, 0xb4, 0x30, 0x30, 0x30, 0x30, 0x78, 0x00 },		// U+002E (.)
 		{ 0xcc, 0xcc, 0xcc, 0xcc, 0xcc, 0xcc, 0xfc, 0x00 },		// U+002E (.)
 		{ 0x00, 0x00, 0x78, 0x0c, 0x7c, 0xcc, 0x76, 0x00 },		// U+0061 (a)
-    
+    { 0x04, 0x0A, 0x04, 0x00, 0x00, 0x00, 0x00, 0x00 },   // °
 };
 
 
@@ -49,7 +49,7 @@ static const spi_cfg_t spi_cfg = {
 };
 
 uint8_t get_font_index(char* letter){
-    char* mapping = " %.0123456789:CINOPTUa";
+    char* mapping = " %.0123456789:CINOPTUa°";
     uint8_t i = 0;
     while (*mapping != '\0') {
         if (*letter == *mapping) {
@@ -162,15 +162,19 @@ void draw_string(char* string, uint8_t len){
 
 void display_send_image(){
 	display_send_index(0x10);
-	char* string = "IN: 23.5 C";
-	draw_empty_row(10);
-	draw_string(string, strlen(string));
-	draw_empty_row(10);
-	draw_string(string, strlen(string));
-	draw_empty_row(10);
-	draw_string(string, strlen(string));
+	char* string1 = "IN:       23.56°C";
+	char* string2 = "          35.46 %   ";
+	char* string3 = "          101325 Pa";
+	char* string4 = "OUT:      15.52°C";
+	draw_empty_row(2);
+	draw_string(string1, strlen(string1));
 	draw_empty_row(4);
-	draw_string(string, strlen(string));
+	draw_string(string2, strlen(string2));
+	draw_empty_row(4);
+	draw_string(string3, strlen(string3));
+	draw_empty_row(7);
+	draw_string(string4, strlen(string4));
+	draw_empty_row(13);
 	
 	for (uint8_t i = 1; i <= 200; i++){
 		display_send_data(0x00);

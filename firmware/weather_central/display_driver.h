@@ -14,7 +14,7 @@
 #define ROWSPERCOLUMN               (SCREEN_HEIGHT / CHAR_HEIGHT)
 #define LEFTEDGEBYTE              	2
 
-#define FONT_ARRAY_LEN          		22
+#define FONT_ARRAY_LEN          		23
 
 uint8_t reverse(uint8_t b);
 
