@@ -105,37 +105,69 @@ void display_config(){
 	display_send_data(0x89);
 }
 
+uint8_t* get_bytes(uint8_t byte){
+    static uint8_t bytes[FONT_SIZE];
+
+    //printf("Old byte: %02x\n", byte);
+
+    for (uint8_t i = 0; i < FONT_SIZE; i++){
+        uint8_t new_byte = 0;
+        for (uint8_t j = 0; j < 8/FONT_SIZE; j++){
+            uint8_t bit = (uint8_t)(byte & 0x01) << (j*FONT_SIZE);
+            for (uint8_t k = 0; k < FONT_SIZE; k++){
+                new_byte = new_byte | bit;
+                bit = bit << 1;
+            }
+            byte = byte >> 1;
+        }
+        //printf("New byte: %02x\n", new_byte);
+        bytes[(FONT_SIZE - 1) - i] = new_byte;
+    }
+    
+    return bytes;
+}
 
 void draw_string(char* string, uint8_t len){
-	uint8_t char_val;
+	uint8_t char_index;
 	uint8_t data;
-  for (uint8_t i = 0; i < CHAR_HEIGHT; i++) {
-    for (uint8_t j = 0; j < CHARSPERROW; j++) {
-      if (j >= LEFTEDGEBYTE && *string != '\0') {
-        char_val = custom_hash(string);
-				data = font[char_val][i];
-        display_send_data(data);
-        string++;
-      } 
-      else {
-        display_send_data(0x00);
-      }
-    }
-    string -= len ;
-  }	
+	uint8_t byte = 0;
+	uint8_t* bytes = NULL;
+  for (uint8_t i = 0; i < 8; i++) {
+		for (uint8_t j = 0; j < FONT_SIZE; j++){
+			for (uint8_t k = 0; k < BYTESPERROW; k++) {
+				if (k >= LEFTEDGEBYTE && *string != '\0') {
+					if (byte == 0){
+						char_index = custom_hash(string);
+						data = font[char_index][i];
+						bytes = get_bytes(data);
+					}
+  					display_send_data(bytes[byte]);
+					byte++;
+					if (byte == FONT_SIZE){
+						byte = 0;
+						string++;
+					}
+				}
+				else{
+					display_send_data(0x00);
+				}
+			}
+			string -= len ;
+		}	
+	}
 }
 
 void display_send_image(){
 	display_send_index(0x10);
-	char* string = "%.0123456789:CINOPTUa";
+	char* string = "1 2 3 4 5";
 	draw_empty_row(10);
-	draw_string(string, 21);
+	draw_string(string, 9);
 	draw_empty_row(10);
-	draw_string(string, 21);
+	draw_string(string, 9);
 	draw_empty_row(10);
-	draw_string(string, 21);
+	draw_string(string, 9);
 	draw_empty_row(4);
-	draw_string(string, 21);
+	draw_string(string, 9);
 	
 	for (uint8_t i = 1; i <= 200; i++){
 		display_send_data(0x00);

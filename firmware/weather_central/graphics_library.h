@@ -6,9 +6,9 @@
 
 #define SCREEN_WIDTH                400
 #define SCREEN_HEIGHT               300
-#define CHAR_WIDTH                  8 
-#define CHAR_HEIGHT                 8
-#define DISTANCEBTWCHARS            4
+#define FONT_SIZE            				4 
+#define CHAR_WIDTH                  (8 * FONT_SIZE) 
+#define CHAR_HEIGHT                 (8 * FONT_SIZE)
 #define BYTESPERROW                 (SCREEN_WIDTH / 8) 
 #define BYTESPERCHARROW             (BYTESPERROW * 8) 
 #define CHARSPERROW                 (SCREEN_WIDTH / CHAR_WIDTH)
