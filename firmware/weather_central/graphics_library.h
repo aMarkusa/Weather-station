@@ -16,13 +16,13 @@
 #define LEFTEDGEBYTE              	2
 
 #define FONT_ARRAY_LEN          22
- 
+
+
 
 void set_pixel(uint8_t x, uint8_t y);
 
 //void draw_empty_row(void);
 
-void draw_char_row(char* string, uint8_t len);
 
 uint8_t custom_hash(char* letter);
 #endif

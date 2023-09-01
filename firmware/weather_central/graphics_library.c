@@ -9,6 +9,8 @@ uint16_t adder = 0;
 #include <stdint.h>
 
 
+
+
 uint8_t custom_hash(char* letter){
     char* mapping = " %.0123456789:CINOPTUa";
     uint8_t i = 0;

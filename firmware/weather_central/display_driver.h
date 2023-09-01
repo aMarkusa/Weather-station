@@ -15,7 +15,7 @@ void display_send_index(uint8_t index);
 
 void display_send_data(uint8_t data);
 
-void draw_string(char* string);
+void draw_string(char* string, uint8_t len);
 
 void draw_empty_row(uint8_t number_of_rows);
 
