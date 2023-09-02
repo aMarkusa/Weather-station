@@ -41,9 +41,9 @@
 /* I2C configuration                                                                  */
 /****************************************************************************************/
 
-		#define IO_EXP_PORT							GPIO_PORT_0
-		#define IO_EXP_SDA_PIN					GPIO_PIN_9
-		#define IO_EXP_SCL_PIN					GPIO_PIN_8
+		#define I2C_PORT							GPIO_PORT_0
+		#define I2C_SDA_PIN						GPIO_PIN_9
+		#define I2C_SCL_PIN						GPIO_PIN_8
 		
 /****************************************************************************************/
 /* SPI configuration                                                                  */

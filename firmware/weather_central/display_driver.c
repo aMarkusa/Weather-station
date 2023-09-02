@@ -77,6 +77,7 @@ void display_send_data(uint8_t data){
 
 void display_init(){
 	spi_initialize(&spi_cfg);
+	init_io();
 	
 	GPIO_ConfigurePin(DISPL_SPI_PORT, DISPL_CS_PIN, OUTPUT, PID_SPI_EN, true);
 	GPIO_ConfigurePin(DISPL_SPI_PORT, DISPL_SCK_PIN, OUTPUT, PID_SPI_CLK, false);

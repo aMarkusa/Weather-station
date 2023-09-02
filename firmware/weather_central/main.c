@@ -55,7 +55,6 @@ void user_on_init(void)
 	
 		GPIO_SetActive(PWR_SWITCH_PORT, PWR_SWITCH_PIN);
 		systick_wait(10000);
-		init_io();
 		display_init();
 		display_power_on();
 		display_config();

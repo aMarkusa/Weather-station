@@ -33,8 +33,8 @@ uint8_t displ_busy_read(void){
 }
 
 void init_io(){
-	GPIO_ConfigurePin(IO_EXP_PORT, IO_EXP_SDA_PIN, INPUT_PULLUP, PID_I2C_SDA, true);
-	GPIO_ConfigurePin(IO_EXP_PORT, IO_EXP_SCL_PIN, INPUT_PULLUP, PID_I2C_SCL, true);
+	GPIO_ConfigurePin(I2C_PORT, I2C_SDA_PIN, INPUT_PULLUP, PID_I2C_SDA, true);
+	GPIO_ConfigurePin(I2C_PORT, I2C_SCL_PIN, INPUT_PULLUP, PID_I2C_SCL, true);
 	i2c_init(&io_i2c_cfg);
 	
 	io_register_write(0x03, 0xFE); // set P1 to input
