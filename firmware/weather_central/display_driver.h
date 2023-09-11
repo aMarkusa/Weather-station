@@ -2,6 +2,7 @@
 #define _DISPLAY_DRIVER_
 
 #include <stdint.h>
+#include "bme680_task.h"
 
 #define SCREEN_WIDTH                400
 #define SCREEN_HEIGHT               300
@@ -36,7 +37,7 @@ void draw_string(char* string, uint8_t len);
 
 void draw_empty_row(uint8_t number_of_rows);
 
-void display_send_image(void);
+void display_send_image(struct environment_data* measured_data);
 
 void display_update_image(void);
 

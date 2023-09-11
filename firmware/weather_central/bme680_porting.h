@@ -25,5 +25,4 @@ uint32_t config_load(uint8_t *config_buffer, uint32_t n_buffer);
 void delay_usec(uint32_t us, void* intf_ptr);
 		 
 #endif
-
 		 

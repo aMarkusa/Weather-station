@@ -161,12 +161,29 @@ void draw_string(char* string, uint8_t len){
 	}
 }
 
-void display_send_image(){
+void display_send_image(struct environment_data* measured_data){
+	char node_temp[10];
+	char temperature[10];
+	char pressure[10];
+	char humidity[10];
+	char gas_resistance[10];
+	sprintf(node_temp, "%2f", measured_data->node_temperature);
+	sprintf(temperature, "%2f", measured_data->temperature);
+	sprintf(pressure, "%d", measured_data->pressure);
+	sprintf(humidity, "%2f", measured_data->humidity);
+	sprintf(gas_resistance, "%d", measured_data->air_quality);
+	
+	char string1[30] = "IN:       ";
+	char string2[30] = "          ";
+	char string3[30] = "          ";
+	char string4[30] = "OUT:      ";
+  strcat(string1, temperature);
+	strcat(string2, humidity);
+	strcat(string3, pressure);
+	strcat(string4, node_temp);
+	
+	
 	display_send_index(0x10);
-	char* string1 = "IN:       23.56°C";
-	char* string2 = "          35.46 %   ";
-	char* string3 = "          101325 Pa";
-	char* string4 = "OUT:      15.52°C";
 	draw_empty_row(2);
 	draw_string(string1, strlen(string1));
 	draw_empty_row(4);

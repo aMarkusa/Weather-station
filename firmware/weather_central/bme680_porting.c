@@ -13,14 +13,7 @@ int8_t i2c_read(uint8_t reg_addr, uint8_t *reg_data_ptr, uint32_t data_len, void
 	// read register
 	i2c_master_receive_buffer_sync(reg_data_ptr, data_len, &abrt_code, I2C_F_ADD_STOP);
 	
-	if (abrt_code == I2C_ABORT_NONE){
-		printf("BME680 data read: %d\n", *reg_data_ptr);
-		return 0;
-	}
-	else{
-		printf("BME680 data read failed\n");
-		return 1;
-	}
+	return abrt_code;
 }
 
 // write to BME680
@@ -31,12 +24,7 @@ int8_t i2c_write(uint8_t reg_addr, uint8_t *reg_data_ptr, uint32_t data_len, voi
 	//delay_usec(100000, NULL);
 	i2c_master_transmit_buffer_sync(reg_data_ptr, data_len, &abrt_code, I2C_F_ADD_STOP);
 	
-	if (abrt_code == I2C_ABORT_NONE){
-		return 0;
-	}
-	else{
-		return 1;
-	}
+	return abrt_code;
 }
 
 // get timestampt in us

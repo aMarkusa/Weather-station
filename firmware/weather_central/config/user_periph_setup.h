@@ -45,6 +45,11 @@
 		#define I2C_SDA_PIN						GPIO_PIN_9
 		#define I2C_SCL_PIN						GPIO_PIN_8
 		
+		#define I2C_ADDRESS_MODE        I2C_ADDRESSING_7B
+		#define I2C_SPEED_MODE					I2C_SPEED_STANDARD
+		#define IO_EXPANDER_I2C_ADDR		(0x41)
+		#define BME_I2C_ADDR						(0x76)
+		
 /****************************************************************************************/
 /* SPI configuration                                                                  */
 /****************************************************************************************/

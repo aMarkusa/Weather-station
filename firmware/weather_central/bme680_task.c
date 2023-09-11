@@ -1,5 +1,6 @@
 #include "bme680_task.h"
 #include "i2c.h"
+#include "user_periph_setup.h"
 
 
 struct bme68x_dev sensor;
@@ -13,10 +14,10 @@ static const i2c_cfg_t bme_i2c_cfg = {
     .clock_cfg.fs_hcnt = I2C_FS_SCL_HCNT_REG_RESET,
     .clock_cfg.fs_lcnt = I2C_FS_SCL_LCNT_REG_RESET,
     .restart_en = I2C_RESTART_ENABLE,
-    .speed = BME_I2C_SPEED_MODE,
+    .speed = I2C_SPEED_MODE,
     .mode = I2C_MODE_MASTER,
-    .addr_mode = BME_I2C_ADDRESS_MODE,
-    .address = BME_I2C_SLAVE_ADDRESS,
+    .addr_mode = I2C_ADDRESS_MODE,
+    .address = BME_I2C_ADDR,
     .tx_fifo_level = 16,
     .rx_fifo_level = 16,
 };
@@ -31,7 +32,9 @@ uint32_t begin_reading(){
 	return delayus_period;
 }
 
-bool perform_reading(){
+int8_t bme680_get_data(struct bme68x_data *data){
+	bme680_init();
+	
 	uint8_t n_fields;
 	
 	int8_t rslt = bme68x_set_op_mode(BME68X_FORCED_MODE, &sensor);
@@ -42,20 +45,15 @@ bool perform_reading(){
 	// wait for reading_duration to end
 	delay_usec(reading_duration, NULL);
 	
-	// get reading data
-	//uint8_t test;
-	//i2c_read(0x22, &test, 1, NULL);
-	//i2c_read(0x23, &test, 1, NULL);
-	rslt = bme68x_get_data(BME68X_FORCED_MODE, &data, &n_fields, &sensor);
-	if(rslt != BME68X_OK){
-		return false;
-	}
-	else{
-		return true;
-	}
+	rslt = bme68x_get_data(BME68X_FORCED_MODE, data, &n_fields, &sensor);
+
+	i2c_release();
+	return rslt;
 }
 
 int8_t bme680_init(){	
+	GPIO_ConfigurePin(I2C_PORT, I2C_SDA_PIN, INPUT_PULLUP, PID_I2C_SDA, true);
+	GPIO_ConfigurePin(I2C_PORT, I2C_SCL_PIN, INPUT_PULLUP, PID_I2C_SCL, true);
 	i2c_init(&bme_i2c_cfg);
 	
 	sensor.chip_id = 0x61;
@@ -84,21 +82,7 @@ int8_t bme680_init(){
 	sensor_heatr_conf.heatr_temp = 300;
 	sensor_heatr_conf.heatr_dur = 100;
 	rslt = bme68x_set_heatr_conf(BME68X_FORCED_MODE, &sensor_heatr_conf, &sensor);
-	if(rslt != BME68X_OK){
-		return 1;
-	}
-	
-	if(!perform_reading()){
-		return 1;
-	}
-	
-	else{
-		/*printf("Temperature: %f\n", data.temperature);
-		printf("Humidity: %f\n", data.humidity);
-		printf("Pressure: %f\n", data.pressure);
-		*/
-		return 0;
-	}
-			
+		
+	return rslt;
 }
 

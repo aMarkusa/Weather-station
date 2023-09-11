@@ -33,8 +33,7 @@
 #include <stdio.h>
 //#include "EventRecorder.h"              // Keil.ARM Compiler::Compiler:Event Recorder
 #include "systick.h"
-
-
+#include "bme680_task.h"
 
 /*
  * FUNCTION DEFINITIONS
@@ -46,19 +45,30 @@
  * @brief User code initialization function.
  ****************************************************************************************
 */
+void get_sensor_data(struct environment_data* measured_data){
+	struct bme68x_data data;
+	bme680_get_data(&data);
+	measured_data->node_temperature = 25.76;
+	measured_data->temperature = (int)(data.temperature * 100 + .5)/100;
+	measured_data->pressure = data.pressure;
+	measured_data->humidity = ((int)data.humidity* 100 + .5)/100;
+	measured_data->air_quality = data.gas_resistance;
+}
 
 
 void user_on_init(void)
 {
+		struct environment_data measured_data;
 		//EventRecorderInitialize (EventRecordAll, 1);
     arch_set_sleep_mode(app_default_sleep_mode);
 	
 		GPIO_SetActive(PWR_SWITCH_PORT, PWR_SWITCH_PIN);
 		systick_wait(10000);
+		get_sensor_data(&measured_data);
 		display_init();
 		display_power_on();
 		display_config();
-		display_send_image();
+		display_send_image(&measured_data);
 		display_update_image();
 }
 
