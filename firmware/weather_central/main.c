@@ -49,10 +49,10 @@ void get_sensor_data(struct environment_data* measured_data){
 	struct bme68x_data data;
 	bme680_get_data(&data);
 	measured_data->node_temperature = 25.76;
-	measured_data->temperature = (int)(data.temperature * 100 + .5)/100;
+	measured_data->temperature = data.temperature;
 	measured_data->pressure = data.pressure;
-	measured_data->humidity = ((int)data.humidity* 100 + .5)/100;
-	measured_data->air_quality = data.gas_resistance;
+	measured_data->humidity = data.humidity;
+	measured_data->gas_resistance = data.gas_resistance;
 }
 
 

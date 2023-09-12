@@ -29,6 +29,7 @@ char font[FONT_ARRAY_LEN][CHAR_HEIGHT] = {
 		{ 0xcc, 0xcc, 0xcc, 0xcc, 0xcc, 0xcc, 0xfc, 0x00 },		// U+002E (.)
 		{ 0x00, 0x00, 0x78, 0x0c, 0x7c, 0xcc, 0x76, 0x00 },		// U+0061 (a)
     { 0x04, 0x0A, 0x04, 0x00, 0x00, 0x00, 0x00, 0x00 },   // °
+		{ 0x3C, 0x66, 0xC3, 0xC3, 0xC3, 0x66, 0x24, 0xE7 },   // Ohm (o)
 };
 
 
@@ -49,7 +50,7 @@ static const spi_cfg_t spi_cfg = {
 };
 
 uint8_t get_font_index(char* letter){
-    char* mapping = " %.0123456789:CINOPTUa°";
+    char* mapping = " %.0123456789:CINOPTUa°o";
     uint8_t i = 0;
     while (*mapping != '\0') {
         if (*letter == *mapping) {
@@ -164,23 +165,38 @@ void draw_string(char* string, uint8_t len){
 void display_send_image(struct environment_data* measured_data){
 	char node_temp[10];
 	char temperature[10];
-	char pressure[10];
+	char pressure[10]; 
 	char humidity[10];
 	char gas_resistance[10];
-	sprintf(node_temp, "%2f", measured_data->node_temperature);
-	sprintf(temperature, "%2f", measured_data->temperature);
-	sprintf(pressure, "%d", measured_data->pressure);
-	sprintf(humidity, "%2f", measured_data->humidity);
-	sprintf(gas_resistance, "%d", measured_data->air_quality);
+	char celsius[2] = "°C";
+	char pascal[3] = " Pa";
+	char percent[2] = " %";
+	char ohm[2] = " o";
 	
-	char string1[30] = "IN:       ";
-	char string2[30] = "          ";
-	char string3[30] = "          ";
-	char string4[30] = "OUT:      ";
+
+	sprintf(node_temp, "%.2f", measured_data->node_temperature);
+	sprintf(temperature, "%.2f", measured_data->temperature);
+	sprintf(pressure, "%d", measured_data->pressure);
+	sprintf(humidity, "%.2f", measured_data->humidity);
+	sprintf(gas_resistance, "%d", measured_data->gas_resistance);
+	
+	
+	char string1[20] = "IN:       ";
+	char string2[20] = "          ";
+	char string3[20] = "          ";
+	char string4[20] = "          ";
+	char string5[20] = "OUT:      ";
+	
   strcat(string1, temperature);
+	strcat(string1, celsius);
 	strcat(string2, humidity);
+	strcat(string2, percent);
 	strcat(string3, pressure);
-	strcat(string4, node_temp);
+	strcat(string3, pascal);
+	strcat(string4, gas_resistance);
+	strcat(string4, ohm);
+	strcat(string5, node_temp);
+	strcat(string5, celsius);
 	
 	
 	display_send_index(0x10);
@@ -190,9 +206,11 @@ void display_send_image(struct environment_data* measured_data){
 	draw_string(string2, strlen(string2));
 	draw_empty_row(4);
 	draw_string(string3, strlen(string3));
-	draw_empty_row(7);
+	draw_empty_row(4);
 	draw_string(string4, strlen(string4));
-	draw_empty_row(13);
+	draw_empty_row(7);
+	draw_string(string5, strlen(string5));
+	draw_empty_row(8);
 	
 	for (uint8_t i = 1; i <= 200; i++){
 		display_send_data(0x00);

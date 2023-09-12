@@ -11,7 +11,7 @@ struct environment_data {
 	float temperature;
 	uint32_t pressure;
 	float humidity;
-	uint32_t air_quality;
+	uint32_t gas_resistance;
 };
 
 
