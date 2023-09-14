@@ -15,14 +15,17 @@ const i2c_cfg_t io_i2c_cfg = {
     .rx_fifo_level = 16,
 };
 
+// set displays reset high
 void displ_rst_high(){
 	io_register_write(0x01, 0xF1); 
 }
 
+// set displays reset high
 void displ_rst_low(){
 	io_register_write(0x01, 0xF0); 
 }
 
+// read the busy output of the display
 uint8_t displ_busy_read(void){
 	uint8_t input_register = 0;
 	uint8_t busy_state = 0xff;
@@ -41,6 +44,7 @@ void init_io(){
 	displ_rst_low(); // set display reset (P0) to low
 }
 
+// read IO-expander register
 uint8_t io_register_read(uint8_t reg_addr){
 	uint8_t reg_data = 0;
 	i2c_abort_t rslt;
@@ -50,6 +54,7 @@ uint8_t io_register_read(uint8_t reg_addr){
 	return reg_data;
 }
 
+// write to IO-expander register
 void io_register_write(uint8_t reg_addr, uint8_t data){
 	uint8_t buffer[] = {reg_addr, data};
 	i2c_abort_t rslt;

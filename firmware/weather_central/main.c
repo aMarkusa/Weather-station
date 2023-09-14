@@ -47,6 +47,8 @@
 */
 void get_sensor_data(struct environment_data* measured_data){
 	struct bme68x_data data;
+	
+	// get sensor data
 	bme680_get_data(&data);
 	measured_data->node_temperature = 25.76;
 	measured_data->temperature = data.temperature;

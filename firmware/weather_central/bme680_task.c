@@ -64,23 +64,24 @@ int8_t bme680_init(){
   sensor.amb_temp = 25; /* The ambient temperature in deg C is used for
 																//defining the heater temperature */
   sensor.delay_us = &delay_usec;
-	if(bme68x_init(&sensor) != 0){
-		return 1;
+	int8_t rslt = bme68x_init(&sensor);
+	if(rslt != BME68X_OK){
+		return rslt;
 	}
-	
-	
 	sensor_conf.os_temp = BME68X_OS_2X;
 	sensor_conf.os_hum = BME68X_OS_16X;
 	sensor_conf.os_pres = BME68X_OS_1X;
 	sensor_conf.odr = BME68X_ODR_NONE;
 	sensor_conf.filter = BME68X_FILTER_OFF;
-	int8_t rslt = bme68x_set_conf(&sensor_conf, &sensor);
+	
+	rslt = bme68x_set_conf(&sensor_conf, &sensor);
 	if(rslt != BME68X_OK){
-		return 1;
+		return rslt;
 	}
 	sensor_heatr_conf.enable = BME68X_ENABLE;
 	sensor_heatr_conf.heatr_temp = 300;
 	sensor_heatr_conf.heatr_dur = 100;
+	
 	rslt = bme68x_set_heatr_conf(BME68X_FORCED_MODE, &sensor_heatr_conf, &sensor);
 		
 	return rslt;

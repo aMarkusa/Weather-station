@@ -49,12 +49,13 @@ static const spi_cfg_t spi_cfg = {
   #endif
 };
 
+// function which returns the array index of the wanted character (from the "font" array)
 uint8_t get_font_index(char* letter){
     char* mapping = " %.0123456789:CINOPTUa°o";
     uint8_t i = 0;
     while (*mapping != '\0') {
         if (*letter == *mapping) {
-            return i % FONT_ARRAY_LEN; // Mapping to the range 0-21
+            return i % FONT_ARRAY_LEN; // Mapping to the range 0-FONT_ARRAY_LEN
         }
         mapping++;
         i++;
@@ -62,6 +63,7 @@ uint8_t get_font_index(char* letter){
 		return FONT_ARRAY_LEN + 1; // Not found
 }
 
+// send index byte to the display
 void display_send_index(uint8_t index){
 	GPIO_SetInactive(DISPL_SPI_PORT, DISPL_DC_PIN);
 	spi_cs_low();
@@ -70,16 +72,19 @@ void display_send_index(uint8_t index){
 	GPIO_SetActive(DISPL_SPI_PORT, DISPL_DC_PIN);
 }
 
+// send data byte to the display
 void display_send_data(uint8_t data){
 	spi_cs_low();
 	spi_send(&data, 1, SPI_OP_BLOCKING);
 	spi_cs_high();
 }
 
+// initialize the display and the IO-expander
 void display_init(){
 	spi_initialize(&spi_cfg);
 	init_io();
 	
+	// configure the SPI-pins
 	GPIO_ConfigurePin(DISPL_SPI_PORT, DISPL_CS_PIN, OUTPUT, PID_SPI_EN, true);
 	GPIO_ConfigurePin(DISPL_SPI_PORT, DISPL_SCK_PIN, OUTPUT, PID_SPI_CLK, false);
 	GPIO_ConfigurePin(DISPL_SPI_PORT, DISPL_SDO_PIN, OUTPUT, PID_SPI_DO, false);
@@ -87,6 +92,7 @@ void display_init(){
 	
 }
 
+// power on the displays driver chip
 void display_power_on(){
 	displ_rst_high();
 	systick_wait(5000);
@@ -96,30 +102,41 @@ void display_power_on(){
 	systick_wait(5000);
 	
 	display_send_index(0x00);
-	display_send_data(0x0E);
+	display_send_data(0x0E);  // soft-reset
 	systick_wait(5000);
 }
 
+// configure the display
 void display_config(){
-	display_send_index(0xE5);
+	display_send_index(0xE5); // set ambient temperature
 	display_send_data(0x19);
 	
 	display_send_index(0xE0);
 	display_send_data(0x02);
 	
-	display_send_index(0x00);
+	display_send_index(0x00); // set the display size (4.2")
 	display_send_data(0x0F);
 	display_send_data(0x89);
 }
 
+void display_update_image(){
+	while(!displ_busy_read());
+	display_send_index(0x04);
+	while(!displ_busy_read());
+	display_send_index(0x12);
+	while(!displ_busy_read());
+ 	display_send_index(0x02);
+}
+
+// scale the characters according to font size (nearest neighbour algorithm)
 uint8_t* scale_byte(uint8_t byte){
     static uint8_t bytes[FONT_SIZE];
 
-    for (uint8_t i = 0; i < FONT_SIZE; i++){
+    for (uint8_t i = 0; i < FONT_SIZE; i++){  // scale the original byte with FONT_SIZE
         uint8_t new_byte = 0;
-        for (uint8_t j = 0; j < 8/FONT_SIZE; j++){
-            uint8_t bit = (uint8_t)(byte & 0x80) >> (j*FONT_SIZE);
-            for (uint8_t k = 0; k < FONT_SIZE; k++){
+        for (uint8_t j = 0; j < 8/FONT_SIZE; j++){  // 8/FONT_SIZE = how many bits are being scaled to a byte
+            uint8_t bit = (uint8_t)(byte & 0x80) >> (j*FONT_SIZE);  // read a bit
+            for (uint8_t k = 0; k < FONT_SIZE; k++){  // set the bits in the new byte
                 new_byte = new_byte | bit;
                 bit = bit >> 1;
             }
@@ -229,12 +246,3 @@ void draw_empty_row(uint8_t number_of_rows){
 		}
 	}
 }	
-
-void display_update_image(){
-	while(!displ_busy_read());
-	display_send_index(0x04);
-	while(!displ_busy_read());
-	display_send_index(0x12);
-	while(!displ_busy_read());
- 	display_send_index(0x02);
-}

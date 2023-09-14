@@ -6,7 +6,7 @@
 // read from BME680
 int8_t i2c_read(uint8_t reg_addr, uint8_t *reg_data_ptr, uint32_t data_len, void* intf_ptr){
 	i2c_abort_t abrt_code;
-	uint8_t write_mode_reg = 0xEC;
+	
 	// enter bme680 Read-mode
 	i2c_master_transmit_buffer_sync(&reg_addr, 1, &abrt_code, I2C_F_ADD_STOP);
 	//delay_usec(100000, NULL);
