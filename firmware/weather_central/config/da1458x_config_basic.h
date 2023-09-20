@@ -27,7 +27,7 @@
 /*    -undefined    External processor mode. Host application runs on an external processor. Communicates with */
 /*                  BLE application through GTL protocol over a signalling iface (UART, SPI etc)               */
 /***************************************************************************************************************/
-#undef CFG_APP
+#define CFG_APP
 
 /****************************************************************************************************************/
 /* Enables the BLE security functionality in TASK_APP. If not defined BLE security related code is compiled out.*/
@@ -37,7 +37,7 @@
 /****************************************************************************************************************/
 /* Enables WatchDog timer.                                                                                      */
 /****************************************************************************************************************/
-#undef CFG_WDOG
+#define CFG_WDOG
 
 /****************************************************************************************************************/
 /* Watchdog timer behavior in production mode:                                                                  */
@@ -115,7 +115,7 @@
 /*    -undefined    External processor mode. Host application runs on an external processor. Communicates with */
 /*                  BLE application through GTL protocol over a signalling iface (UART, SPI etc)               */
 /***************************************************************************************************************/
-#undef CFG_APP
+#define CFG_APP
 
 /****************************************************************************************************************/
 /* Enables the BLE security functionality in TASK_APP. If not defined BLE security related code is compiled out.*/
@@ -125,7 +125,7 @@
 /****************************************************************************************************************/
 /* Enables WatchDog timer.                                                                                      */
 /****************************************************************************************************************/
-#undef CFG_WDOG
+#define CFG_WDOG
 
 /****************************************************************************************************************/
 /* Watchdog timer behavior in production mode:                                                                  */
@@ -140,7 +140,7 @@
 /* should be set to 1 for optimizing memory utilization.                                                        */
 /*      - MAX value for DA14531: 3                                                                              */
 /****************************************************************************************************************/
-#define CFG_MAX_CONNECTIONS     (3)
+#define CFG_MAX_CONNECTIONS     (1)
 
 /****************************************************************************************************************/
 /* Enables development/debug mode. For production mode builds it must be disabled.                              */
@@ -160,7 +160,7 @@
 /* If CFG_PRINTF_UART2 is defined, then serial interface logging mechanism is implented using UART2, else UART1 */
 /* will be used.                                                                                                */
 /****************************************************************************************************************/
-#undef CFG_PRINTF
+#define CFG_PRINTF
 #ifdef CFG_PRINTF
     #define CFG_PRINTF_UART2
 #endif

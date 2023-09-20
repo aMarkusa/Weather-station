@@ -3,7 +3,7 @@
  *
  * @file user_profiles_config.h
  *
- * @brief Configuration file for the profiles used in the application. 
+ * @brief Configuration file for the profiles used in the application.
  *
  * Copyright (C) 2015-2019 Dialog Semiconductor.
  * This computer program includes Confidential, Proprietary Information
@@ -24,11 +24,6 @@
  * This file contains the configuration of the profiles used by the application.
  *
  * @{
- ****************************************************************************************
- */
-
-/*
- * INCLUDE FILES
  ****************************************************************************************
  */
 
@@ -117,7 +112,7 @@
  */
 #define APP_DIS_PNP_ID                  ("\x01\xD2\x00\x80\x05\x00\x01")
 #define APP_DIS_PNP_ID_LEN              (7)
- 
+
 /// @} APP_CONFIG
 
 #endif // _USER_PROFILES_CONFIG_H_

@@ -5,12 +5,12 @@
  *
  * @brief Peripherals setup and initialization.
  *
- * Copyright (C) 2012-2019 Dialog Semiconductor.
+ * Copyright (C) 2015-2019 Dialog Semiconductor.
  * This computer program includes Confidential, Proprietary Information
  * of Dialog Semiconductor. All Rights Reserved.
  *
  ****************************************************************************************
-*/
+ */
 
 /*
  * INCLUDE FILES
@@ -21,18 +21,12 @@
 #include "datasheet.h"
 #include "system_library.h"
 #include "rwip_config.h"
-#include "arch_api.h"
 #include "gpio.h"
 #include "uart.h"
 #include "syscntl.h"
 
 /*
  * GLOBAL VARIABLE DEFINITIONS
- ****************************************************************************************
- */
-
-/*
- * FUNCTION DEFINITIONS
  ****************************************************************************************
  */
 
@@ -44,29 +38,16 @@ void GPIO_reservations(void)
     i.e. to reserve P0_1 as Generic Purpose I/O:
     RESERVE_GPIO(DESCRIPTIVE_NAME, GPIO_PORT_0, GPIO_PIN_1, PID_GPIO);
 */
-		RESERVE_GPIO(PWR_SWITCH, PWR_SWITCH_PORT, PWR_SWITCH_PIN, PID_GPIO);
-		RESERVE_GPIO(I2C_SDA, I2C_PORT, I2C_SDA_PIN, PID_I2C_SDA);
-		RESERVE_GPIO(I2C_SCL, I2C_PORT, I2C_SCL_PIN, PID_I2C_SCL);
-	
-		RESERVE_GPIO(DISPL_CS, DISPL_SPI_PORT, DISPL_CS_PIN, PID_SPI_EN);
-		//RESERVE_GPIO(DISPL_SCK, DISPL_SPI_PORT, DISPL_SCK_PIN, PID_SPI_CLK);
-		RESERVE_GPIO(DISPL_SDO, DISPL_SPI_PORT, DISPL_SDO_PIN, PID_SPI_DO);
-		RESERVE_GPIO(DISPL_DC, DISPL_SPI_PORT, DISPL_DC_PIN, PID_GPIO);
-
-    /*RESERVE_GPIO(UART1_TX, UART1_TX_PORT, UART1_TX_PIN, PID_UART1_TX);
-    RESERVE_GPIO(UART1_RX, UART1_RX_PORT, UART1_RX_PIN, PID_UART1_RX);
-    RESERVE_GPIO(UART1_RTS, UART1_RTSN_PORT, UART1_RTSN_PIN, PID_UART1_RTSN);
-    RESERVE_GPIO(UART1_CTS, UART1_CTSN_PORT, UART1_CTSN_PIN, PID_UART1_CTSN);*/
 
 #if defined (CFG_PRINTF_UART2)
     RESERVE_GPIO(UART2_TX, UART2_TX_PORT, UART2_TX_PIN, PID_UART2_TX);
 #endif
 
-#if defined (CFG_WAKEUP_EXT_PROCESSOR)
-    // external MCU wakeup GPIO
-    RESERVE_GPIO(EXT_WAKEUP_GPIO, EXT_WAKEUP_PORT, EXT_WAKEUP_PIN, PID_GPIO);
+#if !defined (__DA14586__)
+    RESERVE_GPIO(SPI_EN, SPI_EN_PORT, SPI_EN_PIN, PID_SPI_EN);
 #endif
 }
+
 #endif
 
 void set_pad_functions(void)
@@ -79,21 +60,14 @@ void set_pad_functions(void)
 #if defined (__DA14586__)
     // Disallow spontaneous DA14586 SPI Flash wake-up
     GPIO_ConfigurePin(GPIO_PORT_2, GPIO_PIN_3, OUTPUT, PID_GPIO, true);
+#else
+    // Disallow spontaneous SPI Flash wake-up
+    GPIO_ConfigurePin(SPI_EN_PORT, SPI_EN_PIN, OUTPUT, PID_SPI_EN, true);
 #endif
-		GPIO_ConfigurePin(PWR_SWITCH_PORT, PWR_SWITCH_PIN, OUTPUT, PID_GPIO, false);
-
-    /*GPIO_ConfigurePin(UART1_TX_PORT, UART1_TX_PIN, OUTPUT, PID_UART1_TX, false);
-    GPIO_ConfigurePin(UART1_RX_PORT, UART1_RX_PIN, INPUT, PID_UART1_RX, false);
-    GPIO_ConfigurePin(UART1_RTSN_PORT, UART1_RTSN_PIN, OUTPUT, PID_UART1_RTSN, false);
-    GPIO_ConfigurePin(UART1_CTSN_PORT, UART1_CTSN_PIN, INPUT, PID_UART1_CTSN, false);*/
 
 #if defined (CFG_PRINTF_UART2)
+    // Configure UART2 TX Pad
     GPIO_ConfigurePin(UART2_TX_PORT, UART2_TX_PIN, OUTPUT, PID_UART2_TX, false);
-#endif
-
-#if defined (CFG_WAKEUP_EXT_PROCESSOR)
-    // External MCU wakeup GPIO
-    GPIO_ConfigurePin(EXT_WAKEUP_PORT, EXT_WAKEUP_PIN, OUTPUT, PID_GPIO, false);
 #endif
 }
 
@@ -115,9 +89,6 @@ static const uart_cfg_t uart_cfg = {
 void periph_init(void)
 {
 #if defined (__DA14531__)
-    // Disable HW RST on P0_0
-    GPIO_Disable_HW_Reset();
-    
     // In Boost mode enable the DCDC converter to supply VBAT_HIGH for the used GPIOs
     syscntl_dcdc_turn_on_in_boost(SYSCNTL_DCDC_LEVEL_3V0);
 #else
@@ -130,9 +101,7 @@ void periph_init(void)
     // ROM patch
     patch_func();
 
-    // Initialize UART1 ROM driver
-    uart_init(BAUD_RATE_DIV(UART1_BAUDRATE), BAUD_RATE_FRAC(UART1_BAUDRATE), UART1_DATABITS);
-
+    // Initialize peripherals
 #if defined (CFG_PRINTF_UART2)
     // Initialize UART2
     uart_initialize(UART2, &uart_cfg);

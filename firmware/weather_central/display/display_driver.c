@@ -124,7 +124,9 @@ void display_update_image(){
 	display_send_index(0x04);
 	while(!displ_busy_read());
 	display_send_index(0x12);
+	wdg_freeze();
 	while(!displ_busy_read());
+	wdg_resume();
  	display_send_index(0x02);
 }
 
