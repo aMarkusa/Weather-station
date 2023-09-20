@@ -42,6 +42,7 @@
 #include "arch_console.h"
 #include "uart_utils.h"
 #include "ke_msg.h"
+#include "bme680_task.h"
 //#include "user_custs1_def.h"
 //#include "user_custs_config.h"
 
@@ -72,6 +73,8 @@ void user_on_scan_complete(const uint8_t param);;
  ****************************************************************************************
  */
 uint8_t user_ble_gap_get_adv_num_elements(const uint8_t *data, uint8_t len);
+void get_sensor_data(struct environment_data* measured_data);
+void update_data(void);
 
 typedef struct
 {

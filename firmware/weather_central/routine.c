@@ -92,16 +92,15 @@ static const struct scan_configuration user_scan_conf ={
     /// Scan duplicate filtering policy
     .filter_duplic = SCAN_FILT_DUPLIC_EN  //SCAN_FILT_DUPLIC_DIS SCAN_FILT_DUPLIC_EN
 };
-void user_scan_start(void);
+
 
 char peripheral[] = "Temperature";
-
-float node_temperature;
+float node_temperature;  // temperature from our peripheral device
 
 void get_sensor_data(struct environment_data* measured_data){
 	struct bme68x_data data;
 	
-	// get sensor data
+	// get sensor data and copy to struct
 	bme680_get_data(&data);
 	measured_data->node_temperature = node_temperature;
 	measured_data->temperature = data.temperature;
@@ -111,14 +110,12 @@ void get_sensor_data(struct environment_data* measured_data){
 }
 
 
-void routine(void)
+void update_data(void)
 {
 		struct environment_data measured_data;
-		//EventRecorderInitialize (EventRecordAll, 1);
-    arch_set_sleep_mode(app_default_sleep_mode);
 	
 		GPIO_SetActive(PWR_SWITCH_PORT, PWR_SWITCH_PIN);
-		systick_wait(10000);
+		systick_wait(10000); // wait for peripherals to power on
 		get_sensor_data(&measured_data);
 		display_init();
 		display_power_on();
@@ -150,11 +147,6 @@ void user_scan_start(void)
 
     // Send the message
     ke_msg_send(cmd);
-
-    // We are now connectable
-    //ke_state_set(TASK_APP, APP_CONNECTABLE);
-    
-		//printf_string(UART2, "SCAN START\r\n");
     
 }
 
@@ -162,6 +154,7 @@ void user_scan_stop(void){
 	struct gapm_cancel_cmd* cmd = KE_MSG_ALLOC(GAPM_CANCEL_CMD,
                             TASK_GAPM, TASK_APP,
                             gapm_cancel_cmd);
+	
 	cmd->operation = GAPM_CANCEL;
 	
 	ke_msg_send(cmd);
@@ -187,8 +180,7 @@ void user_on_set_dev_config_complete( void )
  ****************************************************************************************
  */
 void user_on_scan_complete(const uint8_t param){
-    //printf_string(UART2, "SCAN COMPLETE\r\n");
-		routine();
+		update_data();
 }
 
 static inline void format_adv_string(uint8_t * data, uint8_t len, char *out_string)
@@ -266,51 +258,25 @@ void user_on_adv_report_ind( struct gapm_adv_report_ind const *param)
 	
 	uint8_t i;
 	for(i = 0 ; i < num_ad_elements; i++)
-	{
-		
-		switch(adv_data_structs[i].type)
-		{
-#if (SCAN_FILTER == (SCAN_FILTER_NAME)) 
-
-			case GAP_AD_TYPE_COMPLETE_NAME:
-			{
+	{		
+		if (adv_data_structs[i].type == GAP_AD_TYPE_COMPLETE_NAME){
+			// check if the peripheral device is ours
+			char local_name[adv_data_structs[i].len + 1];
+			format_adv_string(adv_data_structs[i].data,adv_data_structs[i].len, local_name);
+			int8_t rslt = strcmp((const char*)local_name, (const char*)peripheral); 
+			if (rslt == 0){  // if it is ours
+				// stop the scan 
+				user_scan_stop();
 				
+				// parse the temperature data
+				uint8_t decimal = *(adv_data_structs[i+1].data + 2);
+				uint8_t integer = *(adv_data_structs[i+1].data + 3);
 				
-				char local_name[adv_data_structs[i].len + 1];
-				format_adv_string(adv_data_structs[i].data,adv_data_structs[i].len, local_name);
-				int8_t rslt = strcmp((const char*)local_name, (const char*)peripheral);
-				if (rslt == 0){
-					uint8_t decimal = *(adv_data_structs[i+1].data + 2);
-					uint8_t integer = *(adv_data_structs[i+1].data + 3);
-					
-					uint16_t raw_temperature = ((0x00 | integer) << 8) | decimal;
-					node_temperature = raw_temperature / 100.0;
-					//printf("Device Local Name: %s\r\n", local_name);
-					user_scan_stop();
-					//routine();
-				}
-				break;
+				uint16_t raw_temperature = ((0x00 | integer) << 8) | decimal;
+				node_temperature = raw_temperature / 100.0;
 			}
-#endif 
-
-			default:
-			{
-#if SCAN_FILTER == SCAN_FILTER_NONE
-				
-				
-				////printf("GAP Type: %02x, Data: %s\r\n", adv_data_structs[i].type, 
-				//								format_hex_string(adv_data_structs[i].data, adv_data_structs[i].len) );
-#endif
-				break;
-			}
-		}
-	}
-		
-	
-
-////printf("\r\n ----------------------- \r\n");
-
-	
+		}	
+	}	
 }
 
 
