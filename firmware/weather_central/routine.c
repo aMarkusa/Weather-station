@@ -31,6 +31,7 @@
 #include "co_bt.h"
 #include <string.h>
 #include "user_periph_setup.h"             // SW configuration
+#include "spi_flash.h"
 
 #include "systick.h"
 #include "bme680_task.h"
@@ -73,8 +74,13 @@ static void rtc_interrupt_hdlr(uint8_t event)
  * @brief Configure RTC to generate an interrupt after 10 seconds.
  ****************************************************************************************
 */
-void configure_rtc_wakeup(void)
+void configure_rtc_interrupt(uint8_t duration, uint8_t mode, rtc_interrupt_cb_t  handler)
 {
+		// Ensure PD_TIM is open
+		SetBits16(PMU_CTRL_REG, TIM_SLEEP, 0);
+		// Wait until PD_TIM is opened
+		while ((GetWord16(SYS_STAT_REG) & TIM_IS_UP) != TIM_IS_UP);
+	
     rtc_time_t alarm_time;
 
     // Init RTC
@@ -86,23 +92,29 @@ void configure_rtc_wakeup(void)
 
     rtc_config_t cfg = {.hour_clk_mode = RTC_HOUR_MODE_24H, .keep_rtc = 0};
 
-    rtc_time_t time = {.hour_mode = RTC_HOUR_MODE_24H, .pm_flag = 0, .hour = 11,
-                       .minute = 55, .sec = 30, .hsec = 00};
+    rtc_time_t time = {.hour_mode = RTC_HOUR_MODE_24H, .pm_flag = 0, .hour = 0,
+                       .minute = 0, .sec = 0, .hsec = 00};
 
-    // Alarm interrupt in ten seconds
+    // Alarm interrupt in 30 minutes for deep sleep
     alarm_time = time;
-    alarm_time.sec += 10;
-
+	  if (mode == RTC_ALARM_EN_MIN){
+			alarm_time.minute += duration;
+		}
+		// Alarm interrupt in 20 seconds for scanning
+		else{ 
+			alarm_time.sec += duration;
+		}
+											 
     // Initialize RTC, set time and data, register interrupt handler callback function and enable seconds interrupt
     rtc_init(&cfg);
 
     // Start RTC
     rtc_set_time_clndr(&time, NULL);
-    rtc_set_alarm(&alarm_time, NULL, RTC_ALARM_EN_SEC);
+    rtc_set_alarm(&alarm_time, NULL, mode);
 
     // Clear pending interrupts
     rtc_get_event_flags();
-    rtc_register_intr(rtc_interrupt_hdlr, RTC_INTR_ALRM);
+    rtc_register_intr(handler, RTC_INTR_ALRM);
 #if defined (CFG_EXT_SLEEP_WAKEUP_RTC)
     app_easy_wakeup_set(app_wakeup_cb);
 #endif
@@ -110,37 +122,15 @@ void configure_rtc_wakeup(void)
 
 static void put_system_into_deep_sleep(void)
 {
-	
-	// Ensure PD_TIM is open
-	SetBits16(PMU_CTRL_REG, TIM_SLEEP, 0);
-	// Wait until PD_TIM is opened
-	while ((GetWord16(SYS_STAT_REG) & TIM_IS_UP) != TIM_IS_UP);
-	
-#if defined (CFG_DEEP_SLEEP_WAKEUP_POR)
-    // Configure button for POR
-    GPIO_EnablePorPin(GPIO_BUTTON_PORT, GPIO_BUTTON_PIN, GPIO_POR_PIN_POLARITY_LOW, GPIO_GetPorTime());
-#endif
+	spi_flash_power_down();
+	i2c_release();
 
-#if defined (CFG_DEEP_SLEEP_WAKEUP_GPIO)
-    wkupct_enable_irq(WKUPCT_PIN_SELECT(GPIO_BUTTON_PORT, GPIO_BUTTON_PIN), // Select pin
-                      WKUPCT_PIN_POLARITY(GPIO_BUTTON_PORT, GPIO_BUTTON_PIN, WKUPCT_PIN_POLARITY_LOW), // Polarity low
-                      1, // 1 event
-                      0); // debouncing time = 0
-#endif
-
-#if defined (CFG_DEEP_SLEEP_WAKEUP_RTC)
-    configure_rtc_wakeup();
-#endif
-
-#if defined (CFG_DEEP_SLEEP_WAKEUP_TIMER1)
-    configure_timer1_wakeup();
-#endif
-
-    // Go to deep sleep
-    arch_set_deep_sleep(CFG_DEEP_SLEEP_RAM1,
-                        CFG_DEEP_SLEEP_RAM2,
-                        CFG_DEEP_SLEEP_RAM3,
-                        CFG_DEEP_SLEEP_PAD_LATCH_EN);
+	configure_rtc_interrupt(30, RTC_ALARM_EN_MIN, rtc_interrupt_hdlr);
+	// Go to deep sleep
+	arch_set_deep_sleep(CFG_DEEP_SLEEP_RAM1,
+											CFG_DEEP_SLEEP_RAM2,
+											CFG_DEEP_SLEEP_RAM3,
+											CFG_DEEP_SLEEP_PAD_LATCH_EN);
 }
 
 struct scan_configuration {
@@ -179,7 +169,7 @@ static const struct scan_configuration user_scan_conf ={
 
 
 char peripheral[] = "Temperature";
-float node_temperature;  // temperature from our peripheral device
+float node_temperature = 255.0;  // temperature from our peripheral device
 
 void get_sensor_data(struct environment_data* measured_data){
 	struct bme68x_data data;
@@ -212,6 +202,16 @@ void update_data(void)
 }
 
 
+void user_scan_stop(void){
+	struct gapm_cancel_cmd* cmd = KE_MSG_ALLOC(GAPM_CANCEL_CMD,
+                            TASK_GAPM, TASK_APP,
+                            gapm_cancel_cmd);
+	
+	cmd->operation = GAPM_CANCEL;
+	
+	ke_msg_send(cmd);
+}
+
 /**
  ****************************************************************************************
  * @brief Scan function
@@ -234,18 +234,12 @@ void user_scan_start(void)
 
     // Send the message
     ke_msg_send(cmd);
+		
+		// scan for 15 seconds, if peripheral not found -> temperature = 255
+		configure_rtc_interrupt(15, RTC_ALARM_SEC_EN, (rtc_interrupt_cb_t)user_scan_stop);
     
 }
 
-void user_scan_stop(void){
-	struct gapm_cancel_cmd* cmd = KE_MSG_ALLOC(GAPM_CANCEL_CMD,
-                            TASK_GAPM, TASK_APP,
-                            gapm_cancel_cmd);
-	
-	cmd->operation = GAPM_CANCEL;
-	
-	ke_msg_send(cmd);
-}
 
 /**
  ****************************************************************************************
@@ -352,6 +346,7 @@ void user_on_adv_report_ind( struct gapm_adv_report_ind const *param)
 			format_adv_string(adv_data_structs[i].data,adv_data_structs[i].len, local_name);
 			int8_t rslt = strcmp((const char*)local_name, (const char*)peripheral); 
 			if (rslt == 0){  // if it is ours
+				rtc_interrupt_disable(rtc_get_event_flags());
 				// stop the scan 
 				user_scan_stop();
 				
