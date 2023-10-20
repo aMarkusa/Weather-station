@@ -7,7 +7,7 @@ The BLE Weather Station is a project I started in late 2022 as a way to get prac
 The weather station consists of two main components: a central device serving as the station, and a peripheral device serving as a temperature node.
 
 ### Peripheral device
-<img src="images/periph_front.jpg" width="150" height="280>
+<img src="images/periph_front.jpg" height="280>
 The peripheral device consists of a Renesas DA14531 BLE module together with a STS40 temperature sensor. The peripheral device performs a temperature reading every 10min, and includes this reading in its advertisement data. The BLE module is set to advertise with an interval of 1s.  
 The peripheral is powered with a CR2450 cell-battery. In order to minimize current consumption, non-connectable advertisements are used together with extended sleep which is entered between advertisement. With this configuration, estimations done with a power analyzer results in a battery life of ~4 years. 
 
