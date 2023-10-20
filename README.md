@@ -1,6 +1,6 @@
 
 # BLE Weather Station
-<img src="images/weather station.jpg" height="280">
+<img src="images/weather_station.jpg" height="280">
 The BLE Weather Station is a project I started in late 2022 as a way to get practical experience with developing low-power IoT solutions.
 
 ## Working principle
