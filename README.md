@@ -12,7 +12,7 @@ The peripheral device consists of a Renesas DA14531 BLE module together with a S
 The peripheral is powered with a CR2450 cell-battery. In order to minimize current consumption, non-connectable advertisements are used together with extended sleep which is entered between advertisement. With this configuration, estimations done with a power analyzer results in a battery life of ~4 years. 
 
 ### Central device
-![central_front](./++images/central_front.jpg)
+<img src="images/central_front.jpg" height="280"> <img src="images/central_back.jpg" height="280">
 The main components of the central device is a Renesas DA14531 BLE module, BME680 environmental sensor, and a 4.2" E-Paper display. The central device spends most of its time in deep sleep, but wakes up every 30min to performs its task. After waking up, the central device starts scanning for the peripheral device. If the peripheral device is detected, the central reads the peripherals temperature from the advertisement data. If the peripheral cant be detected within 15s, the temperature value is set to 255. After the peripheral temperature is set, the central device performs a reading from the BME680 sensor (temperature, humidity, air-pressure, gas-resistance). So, at this point, the central has acquired 5 data values:
 
 &nbsp;&nbsp;&nbsp;&nbsp;1. Peripheral temperature  
